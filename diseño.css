@@ -1,0 +1,41 @@
+.boton_portada{
+    padding: 20px 30px;
+    background-color: rgb(10, 167, 10);
+    color: aliceblue;
+    border: none;
+    border-radius: 20px;
+    cursor:pointer; 
+    margin-left:5px ;
+    margin-right: 5px;
+}
+
+.boton_portada:hover{
+    background-color: #41af47;
+}
+
+.boton_portada:active{
+    background-color: #3b943e;
+}
+
+.contenedor_boton{
+    display: flex;
+    align-items:first center;
+    height: 20vh;
+    justify-content: center;
+}
+
+h1{
+    text-align:center;
+    font-size:70px;
+}
+
+h2{
+    text-align:center;
+    font-size: 30px;
+}
+
+.tabla_portada{
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
