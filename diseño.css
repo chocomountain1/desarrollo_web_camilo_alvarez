@@ -39,3 +39,7 @@ h2{
     border-collapse: collapse;
 }
 
+select{
+    display: block;
+    margin: 0 auto;
+}
