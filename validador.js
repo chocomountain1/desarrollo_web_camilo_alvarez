@@ -1,5 +1,6 @@
 //Obtenemos los elementos del formulario
 let select_comuna = document.getElementById("comuna");
+let select_region = document.getElementById("region");
 
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
@@ -21,8 +22,11 @@ function mostrarComunas() {
             txtnode.textContent = comuna;
             select_comuna.appendChild(txtnode);
         });
+    } else{
+        select_comuna.innerHTML='<option value = "">No Seleccionada<\option>'
     }
+    
 };
 
 //Definimos los eventos asociados a los elementos del formulario
-select_comuna.addEventListener("click",mostrarComunas);
+select_region.addEventListener("change",mostrarComunas);
