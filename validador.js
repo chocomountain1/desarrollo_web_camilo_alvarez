@@ -14,6 +14,7 @@ region_comunas.set("atacama",["Alto del Carmen","Caldera","Chañaral","Copiapó"
 //Creamos las funciones que muestran los elementos que necesitemos
 function mostrarComunas() {
     const region = document.getElementById("region").value;
+    select_comuna.innerHTML='<option value = "">No Seleccionada<\option>'
     if(region_comunas.has(region)){ //map si posee la región seleccionada
         let array_comunas = region_comunas.get(region);
         array_comunas.forEach(comuna => {
