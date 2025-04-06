@@ -1,7 +1,20 @@
 //Obtenemos los elementos del formulario
+
+//Lógica para región-comuna
 let select_comuna = document.getElementById("comuna");
 let select_region = document.getElementById("region");
 
+//Lógica para rss
+let select_rss = document.getElementById("rss");
+let ul = document.getElementById("ul")
+
+const input = document.createElement("input");
+input.maxLength = "50";
+input.minLength = "4";
+input.placeholder = "Escribe tu nombre de usuario o la url de tu perfil ";
+
+input.style.width = "300px"
+const list = document.createElement("li");
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
 const region_comunas = new Map();
@@ -26,6 +39,9 @@ function mostrarComunas() {
     const region = document.getElementById("region").value;
     select_comuna.innerHTML=""
     if(region_comunas.has(region)){ //map si posee la región seleccionada
+        const no_seleccionado = document.createElement("option") //Necesitamos que esté esta opción cada vez que se actualiza la región seleccionada
+        no_seleccionado.textContent = "No seleccionada"
+        select_comuna.appendChild(no_seleccionado)
         let array_comunas = region_comunas.get(region);
         array_comunas.forEach(comuna => {
             const txtnode = document.createElement("option");
@@ -35,11 +51,22 @@ function mostrarComunas() {
         });
     } else{
         const seleccionar_comuna = document.createElement("option");
-        seleccionar_comuna.textContent = "Seleccionar comuna";
+        seleccionar_comuna.textContent = "No seleccionada";
         select_comuna.replaceChildren(seleccionar_comuna)
     }
     
 };
 
+
+function mostrar_input_rss(){
+    if(select_rss.value != ""){
+        list.appendChild(input);
+        ul.appendChild(list)
+    } else{
+        list.replaceChildren()
+    }
+}
+
 //Definimos los eventos asociados a los elementos del formulario
 select_region.addEventListener("change",mostrarComunas);
+select_rss.addEventListener("change",mostrar_input_rss);

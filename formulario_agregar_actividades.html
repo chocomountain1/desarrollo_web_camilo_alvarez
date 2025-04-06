@@ -1,37 +1,68 @@
 <html>
-    <div>
         <form>
-            <ul>
-                <li>
-                    <label for="region">Región:</label>
-                    <select id="region" name="region">
-                        <option value="">No seleccionada</option>
-                        <option value ="arica_parinacota">I Región de Arica y Parinacota</option>
-                        <option value ="tarapaca">II Región de Tarapacá</option>
-                        <option value ="antofagasta">III Región de Antofagasta</option>
-                        <option value ="atacama">IV Región de Atacama</option>
-                        <option value ="coquimbo">V Región de Coquimbo</option>
-                        <option value ="valparaiso">VI Región de Valparaíso</option>
-                        <option value ="metropolitana">VII Región Metropolitana</option>
-                        <option value ="ohiggins">VIII Región de O'Higgins</option>
-                        <option value ="maule">IX Región del Maule</option>
-                        <option value ="ñuble">X Región del Ñuble</option>
-                        <option value ="biobio">XI Región del Biobío</option>
-                        <option value ="araucania">XII Región de La Araucanía</option>
-                        <option value ="rios">XIII Región de Los Ríos</option>
-                        <option value ="lagos">XIV Región de Los Lagos</option>
-                        <option value ="aysen">XV Región de Aysén</option>
-                        <option value ="magallanes">XVI Región de Magallanes</option>
-                    </select>
-                </li>
-                <li>
-                    <label for="comuna">Comuna:</label>
-                    <select id="comuna" name="comuna">
-                        <option value="">No seleccionada</option>
-                    </select>
-                </li>
-            </ul>
+            <div>
+                <h1>¿Dónde?</h1>
+                <ul>
+                    <li>
+                        <label for="region">Región:</label>
+                        <select id="region" name="region">
+                            <option value="">No seleccionada</option>
+                            <option value ="arica_parinacota">I Región de Arica y Parinacota</option>
+                            <option value ="tarapaca">II Región de Tarapacá</option>
+                            <option value ="antofagasta">III Región de Antofagasta</option>
+                            <option value ="atacama">IV Región de Atacama</option>
+                            <option value ="coquimbo">V Región de Coquimbo</option>
+                            <option value ="valparaiso">VI Región de Valparaíso</option>
+                            <option value ="metropolitana">VII Región Metropolitana</option>
+                            <option value ="ohiggins">VIII Región de O'Higgins</option>
+                            <option value ="maule">IX Región del Maule</option>
+                            <option value ="ñuble">X Región del Ñuble</option>
+                            <option value ="biobio">XI Región del Biobío</option>
+                            <option value ="araucania">XII Región de La Araucanía</option>
+                            <option value ="rios">XIII Región de Los Ríos</option>
+                            <option value ="lagos">XIV Región de Los Lagos</option>
+                            <option value ="aysen">XV Región de Aysén</option>
+                            <option value ="magallanes">XVI Región de Magallanes</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="comuna">Comuna:</label>
+                        <select id="comuna" name="comuna">
+                            <option value="">No seleccionada</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="sector">Sector:</label>
+                        <input id="sector" name="sector" maxlength="100">
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h1>¿Quién organiza?</h1>
+                <ul id="ul" style = "list-style: none; padding-left: 0;">
+                    <li>
+                        <label for="nombre">Nombre:</label>
+                        <input id="nombre" name="nombre" maxlength="200">
+                    </li>
+                    <li>
+                        <label for="email">E-mail:</label>
+                        <input id="email" name="email" type="email" maxlength="100">
+                    </li>
+                    <li>
+                        <label for="telefono">Telefono:</label>
+                        <input id="tel" name="tel" type="tel" maxlength="12">
+                    </li>
+                        <label for="rss">Contactar por medio de:</label>
+                        <select id="rss" name="rss">
+                            <option value="">Sin seleccionar</option>
+                            <option value="wsp">Whatsapp</option>
+                            <option value="telegram">Telegram</option>
+                            <option value="x">X</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="otra">Otra</option>
+                        </select>
+                </ul>
+            </div>
         </form>
-    </div>
     <script src="validador.js"></script>
 </html>
