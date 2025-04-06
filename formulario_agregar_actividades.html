@@ -2,7 +2,7 @@
         <form>
             <div>
                 <h1>¿Dónde?</h1>
-                <ul>
+                <ul style = "list-style: none; padding-left: 0;">
                     <li>
                         <label for="region">Región:</label>
                         <select id="region" name="region">
@@ -62,6 +62,41 @@
                             <option value="otra">Otra</option>
                         </select>
                 </ul>
+            </div>
+            <div>
+                <h1>¿Cuándo y de que trata?</h1>
+                <ul style = "list-style: none; padding-left: 0;">
+                    <li>
+                        <label for="inicio">Día/Hora/Inicio:</label>
+                        <input id="inicio" name = "inicio" type="datetime-local">
+                    </li>
+                    <li>
+                        <label for="final">Día/Hora/Término:</label>
+                        <input id="final" name = "final" type="datetime-local">
+                    </li>
+                    <li>
+                        <label for="desc">Descripción:</label>
+                        <textarea id="desc" name="desc" placeholder="Ingresa tu descripción del evento" cols="50" rows="10"></textarea>
+                    </li>
+                    <li>
+                        <label for="tema">Tema del evento:</label>
+                        <select>
+                            <option value="">Sin seleccionar</option>
+                            <option value="musica">Música</option>
+                            <option value="deporte">Deporte</option>
+                            <option value="ciencias">Ciencias</option>
+                            <option value="religion">Religión</option>
+                            <option value="política">Política</option>
+                            <option value="tecnologia">Tecnología</option>
+                            <option value="juegos">Juegos</option>
+                            <option value="baile">Baile</option>
+                            <option value="comida">Comida</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </li>
+                </ul>
+
+                
             </div>
         </form>
     <script src="validador.js"></script>

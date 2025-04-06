@@ -8,12 +8,12 @@ let select_region = document.getElementById("region");
 let select_rss = document.getElementById("rss");
 let ul = document.getElementById("ul")
 
-const input = document.createElement("input");
-input.maxLength = "50";
-input.minLength = "4";
-input.placeholder = "Escribe tu nombre de usuario o la url de tu perfil ";
+const input_rss = document.createElement("input");
+input_rss.maxLength = "50";
+input_rss.minLength = "4";
+input_rss.placeholder = "Escribe tu nombre de usuario o la url de tu perfil ";
 
-input.style.width = "300px"
+input_rss.style.width = "300px"
 const list = document.createElement("li");
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
@@ -60,7 +60,7 @@ function mostrarComunas() {
 
 function mostrar_input_rss(){
     if(select_rss.value != ""){
-        list.appendChild(input);
+        list.appendChild(input_rss);
         ul.appendChild(list)
     } else{
         list.replaceChildren()
