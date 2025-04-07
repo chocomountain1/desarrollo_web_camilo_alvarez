@@ -34,6 +34,7 @@ let boton_foto = document.getElementById("boton_foto");
 let ul_foto = document.getElementById("ul_foto");
 let list_foto = document.createElement("li")
 
+//lógica 
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
 const region_comunas = new Map();
