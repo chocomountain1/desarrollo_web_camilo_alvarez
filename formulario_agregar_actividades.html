@@ -39,7 +39,7 @@
             </div>
             <div>
                 <h1>¿Quién organiza?</h1>
-                <ul id="ul" style = "list-style: none; padding-left: 0;">
+                <ul id="ul_organizacion" style = "list-style: none; padding-left: 0;">
                     <li>
                         <label for="nombre">Nombre:</label>
                         <input id="nombre" name="nombre" maxlength="200">
@@ -65,7 +65,7 @@
             </div>
             <div>
                 <h1>¿Cuándo y de que trata?</h1>
-                <ul style = "list-style: none; padding-left: 0;">
+                <ul id="ul_tema" style = "list-style: none; padding-left: 0;">
                     <li>
                         <label for="inicio">Día/Hora/Inicio:</label>
                         <input id="inicio" name = "inicio" type="datetime-local">
@@ -80,7 +80,7 @@
                     </li>
                     <li>
                         <label for="tema">Tema del evento:</label>
-                        <select>
+                        <select id="tema" name="tema">
                             <option value="">Sin seleccionar</option>
                             <option value="musica">Música</option>
                             <option value="deporte">Deporte</option>
@@ -95,8 +95,15 @@
                         </select>
                     </li>
                 </ul>
-
-                
+                <ul id="ul_foto" style="list-style: none; padding-left: 0;">
+                    <li style="display: inline; margin-right: 1rem;">
+                        <label for="foto">Ingresar fotos:</label>
+                        <input id="foto" name="foto" type="file">
+                    </li>
+                    <li style="display: inline ;margin-right: 1rem;">
+                        <button id="boton_foto" name="boton_foto" type="button">Agregar otra foto</button>
+                    </li>
+                </ul>
             </div>
         </form>
     <script src="validador.js"></script>

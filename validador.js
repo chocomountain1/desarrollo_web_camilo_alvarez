@@ -6,15 +6,34 @@ let select_region = document.getElementById("region");
 
 //Lógica para rss
 let select_rss = document.getElementById("rss");
-let ul = document.getElementById("ul")
-
+let ul = document.getElementById("ul_organizacion")
 const input_rss = document.createElement("input");
 input_rss.maxLength = "50";
 input_rss.minLength = "4";
 input_rss.placeholder = "Escribe tu nombre de usuario o la url de tu perfil ";
-
-input_rss.style.width = "300px"
+input_rss.style.width = "300px";
 const list = document.createElement("li");
+
+//lógica para tema
+const input_tema = document.createElement("input");
+input_tema.style.width = "300px"
+input_tema.minLength = "3"
+input_tema.maxLength = "15"
+input_tema.placeholder = "Agrega una descripción del tema de la actividad"
+let select_tema = document.getElementById("tema");
+const list_tema = document.createElement("li");
+let ul_tema = document.getElementById("ul_tema")
+
+
+//lógica para foto
+const input_foto = document.createElement("input");
+input_foto.type="file"
+input_foto.style.width="100%"
+input_foto.style.marginLeft="97px"
+let boton_foto = document.getElementById("boton_foto");
+let ul_foto = document.getElementById("ul_foto");
+let list_foto = document.createElement("li")
+
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
 const region_comunas = new Map();
@@ -67,6 +86,34 @@ function mostrar_input_rss(){
     }
 }
 
+function mostrar_input_tema(){
+    if(select_tema.value == "otro"){
+        list_tema.appendChild(input_tema);
+        ul_tema.appendChild(list_tema)
+    } else{
+        list_tema.replaceChildren()
+    }
+}
+
+let i = 0; //definición de un contador fuera de la función para que no se actualice
+function mostrar_input_foto(){
+    if(i==0){
+        list_foto.appendChild(input_foto);
+        ul_foto.appendChild(list_foto)
+        i+=1
+    }
+    else if(i>0 & i<=3){
+        const input_clon = input_foto.cloneNode(true);
+        list_foto.appendChild(input_clon);
+        ul_foto.appendChild(list_foto)
+        i +=1
+    }else{
+        alert("El máximo de fotos soportadas es de 5")
+    }
+}
+
 //Definimos los eventos asociados a los elementos del formulario
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
+select_tema.addEventListener("change",mostrar_input_tema);
+boton_foto.addEventListener("click",mostrar_input_foto)
