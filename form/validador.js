@@ -28,8 +28,9 @@ let ul_tema = document.getElementById("ul_tema")
 //lógica para foto
 const input_foto = document.createElement("input");
 input_foto.type="file"
-input_foto.style.width="100%"
-input_foto.style.marginLeft="97px"
+input_foto.style.display = "flex"
+input_foto.style.justifyContent = "center"
+input_foto.style.marginLeft = "97px"
 let boton_foto = document.getElementById("boton_foto");
 let ul_foto = document.getElementById("ul_foto");
 let list_foto = document.createElement("li")
