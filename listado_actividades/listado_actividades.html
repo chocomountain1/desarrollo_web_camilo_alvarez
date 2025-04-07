@@ -13,7 +13,7 @@
                 <th style="padding: 6px">Nombre del organizador</th>
                 <th style="padding: 6px;">Total de fotos</th>
             </tr>
-            <tr style="cursor: pointer;">
+            <tr id="tr1" style="cursor: pointer;">
                 <td style="padding: 6px;">2025-03-31 
                     <br>12:00
                 </td>
@@ -26,7 +26,7 @@
                 <td style="padding: 6px;">Gonzalo Rojas</td>
                 <td style="padding: 6px;">2</td>
             </tr>
-            <tr style="cursor: pointer;">
+            <tr id="tr2" style="cursor: pointer;">
                 <td style="padding: 6px;">2025-04-01
                 <br>15:00
                 </td>
@@ -39,7 +39,7 @@
                 <td style="padding: 6px">María Parra</td>
                 <td style="padding: 6px">3</td>
             </tr>
-            <tr style="cursor: pointer;">
+            <tr id="tr3" style="cursor: pointer;">
                 <td style="padding: 6px;">2025-04-03
                     <br>11:00
                 </td>
@@ -52,7 +52,7 @@
                 <td style="padding: 6px">David Ruiz</td>
                 <td style="padding: 6px;">1</td>
             </tr>
-            <tr style="cursor: pointer;">
+            <tr id="tr4" style="cursor: pointer;">
                 <td style="padding: 6px;">2025-04-05
                     <br>19:00
                 </td>
@@ -65,7 +65,7 @@
                 <td style="padding: 6px">Matilda Perales</td>
                 <td style="padding: 6px;">2</td>
             </tr>
-            <tr style="cursor: pointer;">
+            <tr id="tr5" style="cursor: pointer;">
                 <td style="padding: 6px;">2025-04-08
                     <br>18:00
                 </td>
@@ -80,4 +80,13 @@
             </tr>
         </table>
     </div>
+    <div id="modal_listado" style="display: none; position: fixed; top:1%; left:30%; background:white; padding:20px; border:1px solid black;">
+        <p id="inicio"></p>
+        <p id="termino"></p>
+        <p id="comuna"></p>
+        <p id="sector"></p>
+        <p id="tema"></p>
+        <p id="nombre"></p>
+    </div>
+<script src="modales.js"></script>
 </html>
