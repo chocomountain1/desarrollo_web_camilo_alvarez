@@ -34,7 +34,11 @@ let boton_foto = document.getElementById("boton_foto");
 let ul_foto = document.getElementById("ul_foto");
 let list_foto = document.createElement("li")
 
-//lógica 
+//lógica para mostrar modal cuando se envia el form
+boton_submit = document.getElementById("boton_submit");
+modal = document.getElementById("modal");
+boton_no = document.getElementById("boton_no")
+
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
 const region_comunas = new Map();
@@ -113,8 +117,20 @@ function mostrar_input_foto(){
     }
 }
 
+function mostrar_modal(){
+    modal.style.display = "block"; //mostramos el modal
+    document.getElementById("form").style.display="none" //sacamos de vista el formulario
+}
+
+function cerrar_modal(){
+    modal.style.display = "none"; //sacamos de vista la modal
+    document.getElementById("form").style.display="block" //devolvemos la vista al formulario
+}
+
 //Definimos los eventos asociados a los elementos del formulario
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
 select_tema.addEventListener("change",mostrar_input_tema);
-boton_foto.addEventListener("click",mostrar_input_foto)
+boton_foto.addEventListener("click",mostrar_input_foto);
+boton_submit.addEventListener("click",mostrar_modal);
+boton_no.addEventListener("click",cerrar_modal)
