@@ -1,8 +1,8 @@
 <html>
-    <h1 style="justify-content: center; display: flex;">Listado de actividades</h1>
+    <h1 id="h1" style="justify-content: center; display: flex;">Listado de actividades</h1>
     <title>Listado de actividades</title>
     <link rel="stylesheet", href="/desarrollo_web_camilo_alvarez/diseño.css">
-    <div>
+    <div id="div">
         <table border="1"; class="tabla_portada">
             <tr>
                 <th style="padding: 6px;">Inicio</th>
@@ -80,13 +80,23 @@
             </tr>
         </table>
     </div>
-    <div id="modal_listado" style="display: none; position: fixed; top:1%; left:30%; background:white; padding:20px; border:1px solid black;">
+    <div id="modal_listado" style="display: none; position: fixed; top:1%; left:40%; background:white; padding:20px; border:1px solid black;">
+        <h1 style="font-size: 30px; margin-top: 0%;">Detalles de la actividad</h1>
         <p id="inicio"></p>
         <p id="termino"></p>
         <p id="comuna"></p>
         <p id="sector"></p>
         <p id="tema"></p>
         <p id="nombre"></p>
+        <div class="contenedor_boton">
+            <a href="/desarrollo_web_camilo_alvarez/portada/portada.html">
+                <button>Quiero volver a la portada</button>
+            </a>
+            <a href="listado_actividades.html">
+                <button>Quiero volver a la lista de actividades</button>
+            </a>
+
+        </div>
     </div>
 <script src="modales.js"></script>
 </html>

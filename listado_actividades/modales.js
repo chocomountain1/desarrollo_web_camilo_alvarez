@@ -26,6 +26,8 @@ function mostrar_modal(tr){
     document.getElementById("nombre").textContent = "Nombre del organizador: " + celdas[5].textContent;
 
     modal.style.display = "block"
+    document.getElementById("div").style.display="none"
+    document.getElementById("h1").style.display="none"
 }
 
 //Creamos los eventos asociados a los elementos html
