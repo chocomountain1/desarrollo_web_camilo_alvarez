@@ -26,10 +26,10 @@
                 <td style="padding: 6px;">Gonzalo Rojas</td>
                 <td style="padding: 6px;">2</td>
                 <td>
-                    <img style="display: none; width: 320; height:240;" src="/desarrollo_web_camilo_alvarez/portada/futbol.png">
+                    <img id="futbol1" style="display: none; width: 320; height:240;" src="/desarrollo_web_camilo_alvarez/portada/futbol.png">
                 </td>
                 <td>
-                    <img style="display: none; width: 320; height:240;" src="futbol2.png">
+                    <img id="futbol2" style="display: none; width: 320; height:240;" src="futbol2.png">
                 </td>
             </tr>
             <tr id="tr2" style="cursor: pointer;">
@@ -86,7 +86,7 @@
             </tr>
         </table>
     </div>
-    <div id="modal_listado" style="display: none; position: absolute; top:1%; left:30%; background:white; padding:20px; border:1px solid black;">
+    <div id="modal_listado" style="display: none; position: absolute; margin-left: 25%; top:1%; background:white; padding:20px; border:1px solid black;">
         <h1 style="font-size: 30px; margin-top: 0%;">Detalles de la actividad</h1>
         <p id="inicio"></p>
         <p id="termino"></p>
@@ -98,11 +98,27 @@
         </div>
         <div class="contenedor_boton">
             <a href="/desarrollo_web_camilo_alvarez/portada/portada.html">
-                <button class="boton_portada">Quiero volver a la portada</button>
+                <button class="boton_portada" style="cursor: pointer;">Quiero volver a la portada</button>
             </a>
             <a href="listado_actividades.html">
-                <button class="boton_portada">Quiero volver a la lista de actividades</button>
+                <button class="boton_portada" style="cursor: pointer;">Quiero volver a la lista de actividades</button>
             </a>
+        </div>
+    </div>
+    <div id="modal_foto1" style="display: none; position: relative; top:1%; background:white; padding:20px;">
+        <div id="imagenes1" style="display: flex; justify-content: center; align-items: center;">
+            <img src="futbol_800x600.png">
+        </div>
+        <div class="contenedor_boton">
+            <button id="boton_foto1" class="boton_portada" type="button">Cerrar</button>
+        </div>
+    </div>
+    <div id="modal_foto2" style="display: none; position: relative; top:1%; background:white; padding:20px;">
+        <div id="imagenes2" style="display: flex; justify-content: center; align-items: center;">
+            <img src="futbol2_800x600.png">
+        </div>
+        <div class="contenedor_boton">
+            <button id="boton_foto2" class="boton_portada" type="button">Cerrar</button>
         </div>
     </div>
 <script src="modales.js"></script>

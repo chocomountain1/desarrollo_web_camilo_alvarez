@@ -13,7 +13,15 @@ let tr5=document.getElementById("tr5");
 
 let modal = document.getElementById("modal_listado")
 
+//Lógica para que las fotos sean responsivas
+let futbol1 = document.getElementById("futbol1")
+let modal_foto1 = document.getElementById("modal_foto1")
+let div_imagenes1 = document.getElementById("imagenes1")
+let boton_foto1 = document.getElementById("boton_foto1")
 
+let futbol2 = document.getElementById("futbol2")
+let modal_foto2 = document.getElementById("modal_foto2")
+let boton_foto2 = document.getElementById("boton_foto2")
 //Creamos la función que muestra la modal
 
 function mostrar_modal(tr){
@@ -29,6 +37,8 @@ function mostrar_modal(tr){
         const img = celda_img.querySelector("img")
         img.style.display = "block"
         img.style.padding = "3%"
+        img.style.cursor = "pointer"
+        img.className = "img_responsive"
         document.getElementById("div_imagenes").appendChild(img)
     }
 
@@ -37,6 +47,25 @@ function mostrar_modal(tr){
     document.getElementById("h1").style.display="none"
 }
 
+//Creamos la función para poder agrandar la imagen
+function mostrar_modal_foto1(){
+    modal.style.display = "none" //escondemos la modal anterior
+    modal_foto1.style.display="block" //mostramos la nueva modal con la imagen redimensionada
+}
+
+function volver_modal1(){
+    modal.style.display="block"
+    modal_foto1.style.display = "none"
+}
+function mostrar_modal_foto2(){
+    modal.style.display = "none"
+    modal_foto2.style.display = "block"
+}
+
+function volver_modal2(){
+    modal.style.display="block"
+    modal_foto2.style.display="none"
+}
 //Creamos los eventos asociados a los elementos html
 tr1.addEventListener("click",function(){
     mostrar_modal(this); //le mandamos una instancia de tr1, por lo tanto, va a mandar a la función la información de la fila clickeada
@@ -53,3 +82,15 @@ tr4.addEventListener("click",function(){
 tr5.addEventListener("click",function(){
     mostrar_modal(this);
 });
+
+futbol1.addEventListener("click",function(){
+    mostrar_modal_foto1()
+})
+
+boton_foto1.addEventListener("click",volver_modal1)
+
+futbol2.addEventListener("click",function(){
+    mostrar_modal_foto2()
+})
+
+boton_foto2.addEventListener("click",volver_modal2)

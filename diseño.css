@@ -45,6 +45,14 @@ select{
 }
 
 .img-responsive {
-    width: 100%;
-    height: auto;
+    transition: transform 0.3s ease;
   }
+
+.img_responsive:hover{
+    transform: scale(1.05);
+}
+
+.img_redimensionada{
+    height: 800px;
+    width: 600px;
+}
