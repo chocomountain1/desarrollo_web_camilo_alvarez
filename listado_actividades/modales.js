@@ -24,6 +24,13 @@ function mostrar_modal(tr){
     document.getElementById("sector").textContent = "Sector: " + celdas[3].textContent;
     document.getElementById("tema").textContent = "Tema: " + celdas[4].textContent;
     document.getElementById("nombre").textContent = "Nombre del organizador: " + celdas[5].textContent;
+    for(let i=7;i<Array.from(celdas).length;i++){
+        const celda_img = celdas[i]
+        const img = celda_img.querySelector("img")
+        img.style.display = "block"
+        img.style.padding = "3%"
+        document.getElementById("div_imagenes").appendChild(img)
+    }
 
     modal.style.display = "block"
     document.getElementById("div").style.display="none"
