@@ -40,6 +40,13 @@ boton_submit = document.getElementById("boton_submit");
 modal = document.getElementById("modal");
 boton_no = document.getElementById("boton_no")
 
+//Lógica para validar la información ingresada
+const input_sector = document.getElementById("sector");
+const contador = document.getElementById("contador");
+
+const input_nombre = document.getElementById("nombre");
+const contador_nombre = document.getElementById("contador_nombre")
+
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
 const region_comunas = new Map();
@@ -113,10 +120,19 @@ function mostrar_input_foto(){
         list_foto.appendChild(input_clon);
         ul_foto.appendChild(list_foto)
         i +=1
+    }else if (i==4){
+        msg = document.createElement("p")
+        msg.textContent = "¡El máximo de fotos soportadas es de 5!"
+        msg.style.color = "red"
+        msg.style.marginTop = "4px"
+        msg.style.marginLeft = "92px"
+        ul_foto.appendChild(msg)
+        i +=1
     }else{
-        alert("El máximo de fotos soportadas es de 5")
+
     }
 }
+
 
 function mostrar_modal(){
     modal.style.display = "block"; //mostramos el modal
@@ -128,10 +144,76 @@ function cerrar_modal(){
     document.getElementById("form").style.display="block" //devolvemos la vista al formulario
 }
 
+//Funciones de validación
+
+function validar_region(region){
+    if (region.value=="")
+        return false
+}
+
+function validar_comuna(comuna){
+    if(comuna.value == "")
+        return false
+}
+
+function actualizarContador(input,contador) {
+    const max = input.maxLength;
+    const actual = input.value.length;
+    contador.textContent = `${max - actual} caracteres restantes`;
+  }
+
+function validar_nombre(nombre){
+    if(nombre.value == "")
+        return false
+}
+
+function validar_email(email){
+    if(!email.value.includes("@")){
+        return false
+    }
+}
+
+function validar_telefono(cel){
+    exreg = /^\+\d{9}$/;
+    if(!exreg.test(cel.value)){
+        return false
+    }
+}
+
+function validar() {
+    const li_region = document.getElementById("li_region");
+    const select_region = document.getElementById("select_region");
+
+    if (!validar_region(select_region)) {
+        let existingError = li_region.querySelector("p");
+        if (!existingError) {
+            const msg_comuna = document.createElement("p");
+            msg_comuna.textContent = "Este campo es requerido";
+            msg_comuna.style.color = "red";
+            msg_comuna.style.marginTop = "1px";
+            li_region.appendChild(msg_comuna);
+        }
+    } else {
+        const existingError = li_region.querySelector("p");
+        if (existingError) {
+            li_region.removeChild(existingError);
+        }
+    }
+}
+
 //Definimos los eventos asociados a los elementos del formulario
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
 select_tema.addEventListener("change",mostrar_input_tema);
 boton_foto.addEventListener("click",mostrar_input_foto);
+input_sector.addEventListener('input', function(){
+    actualizarContador(this,contador)
+});
+input_nombre.addEventListener("input",function(){
+    actualizarContador(this,contador_nombre)
+})
+
+//El botón que permite agregar la actividad debería hacer catch de las validaciones de los campos ingresados
+boton_submit.addEventListener("click",validar)
 boton_submit.addEventListener("click",mostrar_modal);
 boton_no.addEventListener("click",cerrar_modal)

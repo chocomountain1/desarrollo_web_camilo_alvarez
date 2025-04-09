@@ -1,9 +1,10 @@
 <html>
+    <title>Formulario agregar actividad</title>
         <form id="form" name="form">
+            <h1 style="display: flex; justify-content: center;">¿Dónde?</h1>
             <div style="display: flex; justify-content: center;">
-                <h1>¿Dónde?</h1>
                 <ul style = "list-style: none;">
-                    <li>
+                    <li id="li_region">
                         <label for="region">Región:</label>
                         <select id="region" name="region">
                             <option value="">No seleccionada</option>
@@ -34,15 +35,17 @@
                     <li>
                         <label for="sector">Sector:</label>
                         <input id="sector" name="sector" maxlength="100">
+                        <small id="contador">100 caracteres restantes</small>
                     </li>
                 </ul>
             </div>
+            <h1 style="display: flex; justify-content: center;">¿Quién organiza?</h1>
             <div style="display: flex; justify-content: center;">
-                <h1>¿Quién organiza?</h1>
                 <ul id="ul_organizacion" style = "list-style: none;">
                     <li>
                         <label for="nombre">Nombre:</label>
                         <input id="nombre" name="nombre" maxlength="200">
+                        <small id="contador_nombre">200 caracteres restantes</small>
                     </li>
                     <li>
                         <label for="email">E-mail:</label>
@@ -50,7 +53,7 @@
                     </li>
                     <li>
                         <label for="telefono">Telefono:</label>
-                        <input id="tel" name="tel" type="tel" maxlength="12">
+                        <input id="tel" name="tel" type="tel" maxlength="12" placeholder="+NNN NNNNNNNN">
                     </li>
                         <label for="rss">Contactar por medio de:</label>
                         <select id="rss" name="rss">
@@ -63,8 +66,8 @@
                         </select>
                 </ul>
             </div>
+            <h1 style="display: flex; justify-content: center;">¿Cuándo y de que trata?</h1>
             <div style="display: flex; justify-content: center;">
-                <h1>¿Cuándo y de que trata?</h1>
                 <ul id="ul_tema" style = "list-style: none; padding-left: 0;">
                     <li>
                         <label for="inicio">Día/Hora/Inicio:</label>
