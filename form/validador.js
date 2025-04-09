@@ -2,7 +2,11 @@
 
 //Lógica para región-comuna
 let select_comuna = document.getElementById("comuna");
+let li_comuna = document.getElementById("li_comuna");
+
+let li_region = document.getElementById("li_region");
 let select_region = document.getElementById("region");
+
 
 //Lógica para rss
 let select_rss = document.getElementById("rss");
@@ -45,7 +49,12 @@ const input_sector = document.getElementById("sector");
 const contador = document.getElementById("contador");
 
 const input_nombre = document.getElementById("nombre");
-const contador_nombre = document.getElementById("contador_nombre")
+let li_nombre = document.getElementById("li_nombre");
+
+const input_email = document.getElementById("email");
+const contador_nombre = document.getElementById("contador_nombre");
+
+const input_cel = document.getElementById("tel")
 
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
@@ -146,45 +155,17 @@ function cerrar_modal(){
 
 //Funciones de validación
 
-function validar_region(region){
-    if (region.value=="")
-        return false
-}
-
-function validar_comuna(comuna){
-    if(comuna.value == "")
-        return false
-}
-
 function actualizarContador(input,contador) {
     const max = input.maxLength;
     const actual = input.value.length;
     contador.textContent = `${max - actual} caracteres restantes`;
   }
 
-function validar_nombre(nombre){
-    if(nombre.value == "")
-        return false
-}
 
-function validar_email(email){
-    if(!email.value.includes("@")){
-        return false
-    }
-}
 
-function validar_telefono(cel){
-    exreg = /^\+\d{9}$/;
-    if(!exreg.test(cel.value)){
-        return false
-    }
-}
-
-function validar() {
-    const li_region = document.getElementById("li_region");
-    const select_region = document.getElementById("select_region");
-
-    if (!validar_region(select_region)) {
+function validar_region() {
+    //Quiere decir que está no seleccionado
+    if (select_region.value == "") {
         let existingError = li_region.querySelector("p");
         if (!existingError) {
             const msg_comuna = document.createElement("p");
@@ -193,14 +174,105 @@ function validar() {
             msg_comuna.style.marginTop = "1px";
             li_region.appendChild(msg_comuna);
         }
-    } else {
+        return false
+    //Está seleccionado 
+    } else if(select_region.value != "") {
         const existingError = li_region.querySelector("p");
         if (existingError) {
             li_region.removeChild(existingError);
         }
+        return true
     }
 }
 
+function validar_nombre() {
+    //Quiere decir que está vacio
+    if (input_nombre.value == "") {
+        let existingError = li_nombre.querySelector("p");
+        if (!existingError) {
+            const msg_nombre = document.createElement("p");
+            msg_nombre.textContent = "Este campo es requerido";
+            msg_nombre.style.color = "red";
+            msg_nombre.style.marginTop = "1px";
+            li_nombre.appendChild(msg_nombre);
+        }
+        return false
+    //no está vacio
+    } else if(input_nombre.value != "") {
+        const existingError = li_nombre.querySelector("p");
+        if (existingError) {
+            li_nombre.removeChild(existingError);
+        }
+    }
+    return true
+}
+
+function validar_comuna() {
+    //Quiere decir que está no seleccionado
+    if (select_comuna.value == "") {
+        let existingError = li_comuna.querySelector("p");
+        if (!existingError) {
+            const msg_comuna = document.createElement("p");
+            msg_comuna.textContent = "Este campo es requerido";
+            msg_comuna.style.color = "red";
+            msg_comuna.style.marginTop = "1px";
+            li_comuna.appendChild(msg_comuna);
+        }
+        return false
+    //Está seleccionado 
+    } else if(select_comuna.value != "") {
+        const existingError = li_comuna.querySelector("p");
+        if (existingError) {
+            li_comuna.removeChild(existingError);
+        }
+        return true
+    }
+}
+
+function validar_email() {
+    //Quiere decir que esta vacio o no contiene @
+    if (input_email.value == "" || !input_email.value.includes("@")) {
+        let existingError = li_email.querySelector("p");
+        if (!existingError) {
+            const msg = document.createElement("p");
+            msg.textContent = "Este campo es requerido y debe cumplir con el formato de correo electrónico";
+            msg.style.color = "red";
+            msg.style.marginTop = "1px";
+            li_email.appendChild(msg);
+        }
+        return false
+    //no esta vacio y además contiene @
+    } else if(input_email.value.includes("@") && input_email != "") {
+        const existingError = li_email.querySelector("p");
+        if (existingError) {
+            li_email.removeChild(existingError);
+        }
+        return true
+    }
+}
+
+function validar_telefono() {
+    //Quiere decir que no cumple el formato pedido
+    exreg = /^\+\d{3}\s?\d{6}$/;
+    if (!exreg.test(input_cel.value)) {
+        let existingError = li_celu.querySelector("p");
+        if (!existingError) {
+            const msg = document.createElement("p");
+            msg.textContent = "Este campo es requerido y debe cumplir con el formato de celular";
+            msg.style.color = "red";
+            msg.style.marginTop = "1px";
+            li_celu.appendChild(msg);
+        }
+        return false
+    //cumple el formato
+    } else if(exreg.test(input_cel.value)){
+        const existingError = li_celu.querySelector("p");
+        if (existingError) {
+            li_celu.removeChild(existingError);
+        }
+        return true
+    }
+}
 //Definimos los eventos asociados a los elementos del formulario
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
@@ -214,6 +286,23 @@ input_nombre.addEventListener("input",function(){
 })
 
 //El botón que permite agregar la actividad debería hacer catch de las validaciones de los campos ingresados
-boton_submit.addEventListener("click",validar)
-boton_submit.addEventListener("click",mostrar_modal);
+boton_submit.addEventListener("click",validar_region);
+boton_submit.addEventListener("click",validar_comuna);
+boton_submit.addEventListener("click",validar_nombre);
+boton_submit.addEventListener("click",validar_email);
+boton_submit.addEventListener("click",validar_telefono);
+
+boton_submit.addEventListener("click",function(event){
+    const regionValid = validar_region();
+    const comunaValid = validar_comuna();
+    const nombreValid = validar_nombre();
+    const emailValid = validar_email();
+    const telefonoValid = validar_telefono();
+    if(regionValid && comunaValid && nombreValid && emailValid && telefonoValid){
+        mostrar_modal();
+    }
+    else{
+        event.preventDefault();
+    }
+});
 boton_no.addEventListener("click",cerrar_modal)
