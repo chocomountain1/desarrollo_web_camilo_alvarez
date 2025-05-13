@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = "s3cr3t_k3y"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/',methods=["GET","POST"])
+@app.route('/')
 def home():
     return render_template('portada.html')
 
@@ -27,3 +27,7 @@ def activity_list():
 @app.route('/statistics',methods=["GET","POST"])
 def statistics():
     return render_template('estadistica.html')
+
+@app.route('/saved_msg',methods=["GET","POST"])
+def saved_msg():
+    return render_template('mensaje_guardado.html')
