@@ -11,3 +11,7 @@ app = Flask(__name__)
 
 app.secret_key = "s3cr3t_k3y"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.route('/')
+def home():
+    return render_template('portada.html')
