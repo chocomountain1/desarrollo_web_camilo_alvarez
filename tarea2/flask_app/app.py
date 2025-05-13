@@ -19,3 +19,11 @@ def home():
 @app.route('/add_activity',methods=["GET","POST"])
 def add_activity():
     return render_template('formulario_agregar_actividades.html')
+
+@app.route('/activity_list',methods=["GET","POST"])
+def activity_list():
+    return render_template('listado_actividades.html')
+
+@app.route('/statistics',methods=["GET","POST"])
+def statistics():
+    return render_template('estadistica.html')
