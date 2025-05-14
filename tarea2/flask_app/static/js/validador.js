@@ -139,7 +139,7 @@ function mostrarComunas() {
         let array_comunas = dic_region?.comunas
         array_comunas.forEach(comuna => {
             const txtnode = document.createElement("option");
-            txtnode.value = comuna.nombre;
+            txtnode.value = comuna.id;
             txtnode.textContent = comuna.nombre;
             select_comuna.appendChild(txtnode);
         });
@@ -198,12 +198,11 @@ function mostrar_input_foto(){
 
 function mostrar_modal(){
     modal.style.display = "block"; //mostramos el modal
-    document.getElementById("form").style.display="none" //sacamos de vista el formulario
+
 }
 
 function cerrar_modal(){
     modal.style.display = "none"; //sacamos de vista la modal
-    document.getElementById("form").style.display="block" //devolvemos la vista al formulario
 }
 
 //Funciones de validación

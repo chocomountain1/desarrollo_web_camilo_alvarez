@@ -117,13 +117,13 @@
                     </li>
                 </ul>
             </div>
-        </form>
-        <div id="modal" style="display: none; position: fixed; top:1%; left:30%; background:white; padding:20px; border:1px solid black;">
+            <div id="modal" style="display: none; position: fixed; top:1%; left:30%; background:white; padding:20px; border:1px solid black;">
             <p>¿Está seguro de que quiere agregar esta actividad?</p>
             <a href="{{url_for('saved_msg')}}">
                 <button class="boton_portada" type="submit">Sí, estoy seguro</button>
             </a>
             <button id="boton_no">No, no estoy seguro, quiero volver al formulario</button>
         </div>
+        </form>
     <script src="{{url_for('static', filename='js/validador.js')}}"></script>
 </html>
