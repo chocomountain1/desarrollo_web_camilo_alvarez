@@ -131,7 +131,7 @@ let region_comuna = {
 function mostrarComunas() {
     const region = document.getElementById("region").value;
     select_comuna.innerHTML=""
-    if(region_comuna.some(r => r.nombre == region)){ //dic si posee la región seleccionada
+    if(region_comuna.regiones.some(r => r.nombre == region)){ //dic si posee la región seleccionada
         const no_seleccionado = document.createElement("option") //Necesitamos que esté esta opción cada vez que se actualiza la región seleccionada
         no_seleccionado.textContent = "No seleccionada"
         select_comuna.appendChild(no_seleccionado)
