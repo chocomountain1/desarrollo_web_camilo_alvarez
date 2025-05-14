@@ -29,30 +29,16 @@
                 </tr>
                 {% for actividad,nombre_comuna in datos %}
                 <tr>
-                    <td style="padding: 6px;">actividad.dia_hora_inicio</td>
-                    <td style="padding: 6px">actividad.dia_hora_termino</td>
-                    <td style="padding: 6px;">nombre_comuna</td>
-                    <td style="padding: 6px;">actividades.sector</td>
+                    <td style="padding: 6px;">{{actividad.dia_hora_inicio}}</td>
+                    <td style="padding: 6px">{{actividad.dia_hora_termino}}</td>
+                    <td style="padding: 6px;">{{nombre_comuna}}</td>
+                    <td style="padding: 6px;">{{actividad.sector}}</td>
                     <td style="padding: 6px;"></td>
                     <td style="padding: 6px">
                         <img src=>
                     </td>
                 </tr>
-                {% end for %}
-                <tr>
-                    <td style="padding: 6px;">
-                        <br>
-                    </td>
-                    <td style="padding: 6px">2025-04-08
-                        <br>19:30
-                    </td>
-                    <td style="padding: 6px;">Santiago</td>
-                    <td style="padding: 6px;">Cine arte Normandie</td>
-                    <td style="padding: 6px;">Función "Campamento sangriento"</td>
-                    <td style="padding: 6px">
-                        <img src="cine.jpg">
-                    </td>
-                </tr>
+                {% endfor %}
             </table>
         </div>
     </body>
