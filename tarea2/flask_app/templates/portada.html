@@ -27,65 +27,21 @@
                     <th style="padding: 6px;">Tema</th>
                     <th style="padding: 6px">Foto</th>
                 </tr>
+                {% for actividad,nombre_comuna in datos %}
                 <tr>
-                    <td style="padding: 6px;">2025-03-31 
-                        <br>12:00
-                    </td>
-                    <td style="padding: 6px">2025-03.31
-                        <br>14:00
-                    </td>
-                    <td style="padding: 6px;">Santiago</td>
-                    <td style="padding: 6px;">Parque O'higgins</td>
-                    <td style="padding: 6px;">Taller de fútbol infantil</td>
+                    <td style="padding: 6px;">actividad.dia_hora_inicio</td>
+                    <td style="padding: 6px">actividad.dia_hora_termino</td>
+                    <td style="padding: 6px;">nombre_comuna</td>
+                    <td style="padding: 6px;">actividades.sector</td>
+                    <td style="padding: 6px;"></td>
                     <td style="padding: 6px">
-                        <img class="img_responsive" src="futbol.jpg">
+                        <img src=>
                     </td>
                 </tr>
+                {% end for %}
                 <tr>
-                    <td style="padding: 6px;">2025-04-01
-                    <br>15:00
-                    </td>
-                    <td style="padding: 6px">2025-04-01
-                        <br>19:00
-                    </td>
-                    <td style="padding: 6px;">Quilicura</td>
-                    <td style="padding: 6px;">Plaza de Quilicura</td>
-                    <td style="padding: 6px;">Taller de jardinería</td>
-                    <td style="padding: 6px">
-                        <img src="flores.jpg">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px;">2025-04-03
-                        <br>11:00
-                    </td>
-                    <td style="padding: 6px">2025-04-03
-                        <br>15:00
-                    </td>
-                    <td style="padding: 6px;">San Miguel</td>
-                    <td style="padding: 6px;">Gran Av. José Miguel Carrera 110</td>
-                    <td style="padding: 6px;">Maratón 30km abierta a todas las edades</td>
-                    <td style="padding: 6px">
-                        <img src="maraton.jpg">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px;">2025-04-05
-                        <br>19:00
-                    </td>
-                    <td style="padding: 6px">2025-04-05
-                        <br>22:00
-                    </td>
-                    <td style="padding: 6px;">Providencia</td>
-                    <td style="padding: 6px;">Teatro municipal providencia</td>
-                    <td style="padding: 6px;">Concierto gratuito de música clásica</td>
-                    <td style="padding: 6px">
-                        <img src="concierto.jpg">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px;">2025-04-08
-                        <br>18:00
+                    <td style="padding: 6px;">
+                        <br>
                     </td>
                     <td style="padding: 6px">2025-04-08
                         <br>19:30

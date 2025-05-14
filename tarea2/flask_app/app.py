@@ -14,7 +14,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #--Auth routes--#
 @app.route('/')
 def home():
-    return render_template('portada.html')
+    actividades = db.Actividad.query.all() #Obtenemos todas las actividades desde la base de datos
+    nombres_comunas = []
+    for actividad in actividades:
+        nombres_comunas.append(db.Comuna.query.filter_by(id=actividad.comuna_id))
+
+    datos = list(zip(actividades,nombres_comunas)) #Hacemos una tupla de largo 2 con ambos datos
+    return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array
 
 @app.route('/add_activity',methods=["GET","POST"])
 def add_activity():
