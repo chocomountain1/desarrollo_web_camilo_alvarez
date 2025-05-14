@@ -18,7 +18,8 @@ def home():
     actividades = session.query(db.Actividad).all() #Obtenemos todas las actividades desde la base de datos
     nombres_comunas = []
     for actividad in actividades:
-        nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id))
+        print(actividad.comuna_id)
+        nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)
 
     datos = list(zip(actividades,nombres_comunas)) #Hacemos una tupla de largo 2 con ambos datos
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array
