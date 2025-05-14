@@ -18,7 +18,7 @@ def home():
 
 @app.route('/add_activity',methods=["GET","POST"])
 def add_activity():
-    if request == 'POST':
+    if request.method == 'POST':
         session = db.SessionLocal()
         nueva_actividad = db.Actividad(
         nombre=request.form['nombre'],
