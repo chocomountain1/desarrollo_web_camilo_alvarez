@@ -126,19 +126,21 @@ let region_comuna = {
         }
     ]
 };
+
 //Creamos las funciones que muestran los elementos que necesitemos
 function mostrarComunas() {
     const region = document.getElementById("region").value;
     select_comuna.innerHTML=""
-    if(region_comunas.has(region)){ //map si posee la región seleccionada
+    if(region_comuna.some(r => r.nombre == region)){ //dic si posee la región seleccionada
         const no_seleccionado = document.createElement("option") //Necesitamos que esté esta opción cada vez que se actualiza la región seleccionada
         no_seleccionado.textContent = "No seleccionada"
         select_comuna.appendChild(no_seleccionado)
-        let array_comunas = region_comunas.get(region);
+        const dic_region = region_comuna.regiones.find(r => r.nombre == region)
+        let array_comunas = dic_region?.comunas
         array_comunas.forEach(comuna => {
             const txtnode = document.createElement("option");
-            txtnode.value = comuna;
-            txtnode.textContent = comuna;
+            txtnode.value = comuna.nombre;
+            txtnode.textContent = comuna.nombre;
             select_comuna.appendChild(txtnode);
         });
     } else{
