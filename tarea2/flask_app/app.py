@@ -18,8 +18,23 @@ def home():
 
 @app.route('/add_activity',methods=["GET","POST"])
 def add_activity():
+    if request == 'POST':
+        session = db.SessionLocal()
+        nueva_actividad = db.Actividad(
+        nombre=request.form['nombre'],
+        sector=request.form['sector'],
+        email=request.form['email'],
+        celular=request.form['celular'],
+        dia_hora_inicio=request.form['dia_hora_inicio'],
+        dia_hora_termino=request.form['dia_hora_termino'],
+        descripcion=request.form['descripcion'],
+        comuna_id=request.form['comuna_id']
+        )
+        session.add(nueva_actividad)
+        session.commit()
+        return redirect(url_for('saved_msg'))
     return render_template('formulario_agregar_actividades.html')
-
+    
 @app.route('/activity_list',methods=["GET","POST"])
 def activity_list():
     return render_template('listado_actividades.html')
