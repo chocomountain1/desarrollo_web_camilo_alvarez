@@ -5,7 +5,9 @@
 -- MySQL Workbench Forward Engineering
 
 --Darle los permisos al usuario
-GRANT ALL ON tarea2.* TO cc5002@localhost
+GRANT ALL ON tarea2.* TO cc5002@localhost;
+
+FLUSH PRIVILEGES;
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;

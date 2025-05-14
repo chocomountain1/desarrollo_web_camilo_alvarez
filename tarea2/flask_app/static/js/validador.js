@@ -95,7 +95,7 @@ function mostrarComunas() {
         seleccionar_comuna.textContent = "No seleccionada";
         select_comuna.replaceChildren(seleccionar_comuna)
     }
-    
+
 };
 
 

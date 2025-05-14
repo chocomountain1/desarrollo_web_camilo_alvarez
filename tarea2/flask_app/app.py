@@ -28,7 +28,7 @@ def add_activity():
         dia_hora_inicio=request.form['dia_hora_inicio'],
         dia_hora_termino=request.form['dia_hora_termino'],
         descripcion=request.form['descripcion'],
-        comuna_id=request.form['comuna_id']
+        comuna_id=request.form['comuna']
         )
         session.add(nueva_actividad)
         session.commit()

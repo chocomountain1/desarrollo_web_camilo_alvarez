@@ -1,7 +1,7 @@
 -- Active: 1747088022784@@localhost@3306
 -- Crear usuario
 
-CREATE USER 'cc5002'@'localhost' IDENTIFIED BY 'cc5002'
+CREATE USER 'cc5002'@'localhost' IDENTIFIED BY 'programacionweb'
 
 --Eliminar el usuario de ser ncecesario
 
