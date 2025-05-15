@@ -27,13 +27,19 @@
                     <th style="padding: 6px;">Tema</th>
                     <th style="padding: 6px">Foto</th>
                 </tr>
-                {% for actividad,nombre_comuna,archivo in datos %}
+                {% for actividad,nombre_comuna,archivo,tema in datos %}
                 <tr>
                     <td style="padding: 6px;">{{actividad.dia_hora_inicio}}</td>
                     <td style="padding: 6px">{{actividad.dia_hora_termino}}</td>
                     <td style="padding: 6px;">{{nombre_comuna}}</td>
                     <td style="padding: 6px;">{{actividad.sector}}</td>
-                    <td style="padding: 6px;"></td>
+                    <td style="padding: 6px;">
+                        {% if tema.glosa_otro != "" %}
+                        {{tema.tema}}
+                        {% else %}
+                        {{tema.glosa_otro}}
+                        {% endif %}
+                    </td>
                     <td style="padding: 6px">
                         <img src="{{ archivo.ruta_archivo }}">
                     </td>
