@@ -3,6 +3,7 @@ from database import db
 from werkzeug.utils import secure_filename
 import filetype
 import os
+from sqlalchemy import text
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -39,12 +40,13 @@ def add_activity():
         ) #Preguntamos al form por los datos correspondientes a la actividad que estamos agregando
         session.add(nueva_actividad) #Agregamos la actividad a la respectiva tabla de Actividad definida en db
         file = request.files['foto'] #Guardamos el file de la foto
-        nombre_archivo = secure_filename(file.filename), #Accedemos de forma segura al nombre del archivo
-        ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos el archivo en uploads de static, definido por flask
+        nombre_archivo = secure_filename(file.filename) #Accedemos de forma segura al nombre del archivo
+        ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos la ruta del archivo en uploads de static, definido por flask
+        file.save(ruta_archivo)
         nueva_foto = db.Foto(
             nombre_archivo = nombre_archivo,
             ruta_archivo = ruta_archivo,
-            actividad_id = session.execute("SHOW TABLE STATUS LIKE 'foto'").fetchone()['Auto_increment'] #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
+            actividad_id = session.execute(text("SHOW TABLE STATUS LIKE 'foto'")).mappings().fetchone()['Auto_increment'] #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
         )
         session.add(nueva_foto)
         session.commit() #Mandamos los cambios
