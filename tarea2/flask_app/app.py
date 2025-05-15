@@ -40,7 +40,7 @@ def add_activity():
         session.add(nueva_actividad) #Agregamos la actividad a la respectiva tabla de Actividad definida en db
         file = request.files['foto'] #Guardamos el file de la foto
         nombre_archivo = secure_filename(file.filename), #Accedemos de forma segura al nombre del archivo
-        ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo), #Guardamos el archivo en uploads de static, definido por flask
+        ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos el archivo en uploads de static, definido por flask
         nueva_foto = db.Foto(
             nombre_archivo = nombre_archivo,
             ruta_archivo = ruta_archivo,
