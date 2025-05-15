@@ -20,9 +20,10 @@ def home():
     nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
     for actividad in actividades:
         nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
+    archivos = session.query(db.Foto).group_by('actividad_id').first() #Queremos la primera foto de cada subgrupo de fotos, agrupadas por actividad
 
-    datos = list(zip(actividades,nombres_comunas)) #Hacemos una tupla de largo 2 con ambos datos
-    return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array
+    datos = list(zip(actividades,nombres_comunas,archivos)) #Hacemos una tupla de largo 2 con ambos datos
+    return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array, los archivos (fotos)
 
 @app.route('/add_activity',methods=["GET","POST"])
 def add_activity():
