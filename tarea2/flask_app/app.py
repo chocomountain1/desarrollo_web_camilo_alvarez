@@ -38,6 +38,7 @@ def home():
 def add_activity():
     if request.method == 'POST':
         session = db.SessionLocal() #Iniciamos una sesión en la base de datos
+        ##Actividad##
         nueva_actividad = db.Actividad(
         nombre=request.form['nombre'],
         sector=request.form['sector'],
@@ -49,6 +50,8 @@ def add_activity():
         comuna_id=request.form['comuna']
         ) #Preguntamos al form por los datos correspondientes a la actividad que estamos agregando
         session.add(nueva_actividad) #Agregamos la actividad a la respectiva tabla de Actividad definida en db
+
+        ##Fotos_actividad##
         session.commit() #necesitamos que se cree antes la actividad que su foto, debido a que si no la llave foránea de Foto apuntará a un id que no existe
         files = request.files.getlist('foto') #Guardamos los files de la fotos en una lista de files
         for file in files:
@@ -61,6 +64,18 @@ def add_activity():
                 actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
             )
             session.add(nueva_foto)
+        session.commit() #Mandamos los cambios
+
+        ##Tema_actividad##
+        glosa_otro = request.form.get('otro')
+        if glosa_otro is None:
+            glosa_otro = ""
+        nuevo_tema = db.ActividadTema(
+            tema=request.form['tema'],
+            glosa_otro=glosa_otro,
+            actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
+        )
+        session.add(nuevo_tema) #Agregamos el tema
         session.commit() #Mandamos los cambios
         return redirect(url_for('saved_msg'))
     return render_template('formulario_agregar_actividades.html')

@@ -20,6 +20,7 @@ const list = document.createElement("li");
 
 //lógica para tema
 const input_tema = document.createElement("input");
+input_tema.name = "otro"
 input_tema.style.width = "300px"
 input_tema.minLength = "3"
 input_tema.maxLength = "15"

@@ -95,6 +95,9 @@ CREATE TABLE IF NOT EXISTS `tarea2`.`foto` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `tarea2`.`foto`;
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- -----------------------------------------------------
 -- Table `tarea2`.`contactar_por`
