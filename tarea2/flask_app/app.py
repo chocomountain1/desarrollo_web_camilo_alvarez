@@ -16,10 +16,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def home():
     session = db.SessionLocal()
     actividades = session.query(db.Actividad).all() #Obtenemos todas las actividades desde la base de datos
-    nombres_comunas = []
+    nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
     for actividad in actividades:
-        print(actividad.comuna_id)
-        nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)
+        nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
 
     datos = list(zip(actividades,nombres_comunas)) #Hacemos una tupla de largo 2 con ambos datos
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array
@@ -27,7 +26,7 @@ def home():
 @app.route('/add_activity',methods=["GET","POST"])
 def add_activity():
     if request.method == 'POST':
-        session = db.SessionLocal()
+        session = db.SessionLocal() #Iniciamos una sesión en la base de datos
         nueva_actividad = db.Actividad(
         nombre=request.form['nombre'],
         sector=request.form['sector'],
@@ -37,9 +36,18 @@ def add_activity():
         dia_hora_termino=request.form['dia_hora_termino'],
         descripcion=request.form['descripcion'],
         comuna_id=request.form['comuna']
+        ) #Preguntamos al form por los datos correspondientes a la actividad que estamos agregando
+        session.add(nueva_actividad) #Agregamos la actividad a la respectiva tabla de Actividad definida en db
+        file = request.files['foto'] #Guardamos el file de la foto
+        nombre_archivo = secure_filename(file.filename), #Accedemos de forma segura al nombre del archivo
+        ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo), #Guardamos el archivo en uploads de static, definido por flask
+        nueva_foto = db.Foto(
+            nombre_archivo = nombre_archivo,
+            ruta_archivo = ruta_archivo,
+            actividad_id = session.execute("SHOW TABLE STATUS LIKE 'foto'").fetchone()['Auto_increment'] #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
         )
-        session.add(nueva_actividad)
-        session.commit()
+        session.add(nueva_foto)
+        session.commit() #Mandamos los cambios
         return redirect(url_for('saved_msg'))
     return render_template('formulario_agregar_actividades.html')
     
