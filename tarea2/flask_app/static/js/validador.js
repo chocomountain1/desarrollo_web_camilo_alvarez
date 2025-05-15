@@ -31,6 +31,7 @@ let ul_tema = document.getElementById("ul_tema")
 
 //lógica para foto
 const input_foto = document.createElement("input");
+input_foto.name="foto" // esto para que el backend lo reconozca es necesario
 input_foto.type="file"
 input_foto.style.display = "flex"
 input_foto.style.justifyContent = "center"
@@ -180,6 +181,7 @@ function mostrar_input_foto(){
     else if(i>0 & i<=3){
         const input_clon = input_foto.cloneNode(true);
         list_foto.appendChild(input_clon);
+        console.log(input_clon.name)
         ul_foto.appendChild(list_foto)
         i +=1
     }else if (i==4){
