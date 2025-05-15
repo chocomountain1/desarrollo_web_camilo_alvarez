@@ -42,11 +42,11 @@ def add_activity():
         file = request.files['foto'] #Guardamos el file de la foto
         nombre_archivo = secure_filename(file.filename) #Accedemos de forma segura al nombre del archivo
         ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos la ruta del archivo en uploads de static, definido por flask
-        file.save(ruta_archivo)
+        file.save(ruta_archivo) #Guardamos el file en esta carpeta para mostrarla en el futuro ya que sabemos donde se guardó
         nueva_foto = db.Foto(
             nombre_archivo = nombre_archivo,
             ruta_archivo = ruta_archivo,
-            actividad_id = session.execute(text("SHOW TABLE STATUS LIKE 'foto'")).mappings().fetchone()['Auto_increment'] #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
+            actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() + 1 #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
         )
         session.add(nueva_foto)
         session.commit() #Mandamos los cambios
