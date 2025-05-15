@@ -20,9 +20,18 @@ def home():
     nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
     for actividad in actividades:
         nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
-    archivos = session.query(db.Foto).group_by('actividad_id').first() #Queremos la primera foto de cada subgrupo de fotos, agrupadas por actividad
 
-    datos = list(zip(actividades,nombres_comunas,archivos)) #Hacemos una tupla de largo 2 con ambos datos
+    session.execute(text("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")) #Debemos setear esta configuración debido a que de lo contrario, la siguiente query no funciona
+    archivos = session.query(db.Foto).all() #obtenemos todas las fotos
+    primeras_fotos = []
+    max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar()
+    vistos = []
+    for i in range(max_id):
+        if archivos[i].actividad_id not in vistos:
+            primeras_fotos.append(archivos[i])
+            vistos.append(archivos[i].actividad_id)
+
+    datos = list(zip(actividades,nombres_comunas,primeras_fotos)) #Hacemos una tupla de largo 2 con ambos datos
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array, los archivos (fotos)
 
 @app.route('/add_activity',methods=["GET","POST"])
@@ -40,6 +49,7 @@ def add_activity():
         comuna_id=request.form['comuna']
         ) #Preguntamos al form por los datos correspondientes a la actividad que estamos agregando
         session.add(nueva_actividad) #Agregamos la actividad a la respectiva tabla de Actividad definida en db
+        session.commit() #necesitamos que se cree antes la actividad que su foto, debido a que si no la llave foránea de Foto apuntará a un id que no existe
         file = request.files['foto'] #Guardamos el file de la foto
         nombre_archivo = secure_filename(file.filename) #Accedemos de forma segura al nombre del archivo
         ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos la ruta del archivo en uploads de static, definido por flask
@@ -47,7 +57,7 @@ def add_activity():
         nueva_foto = db.Foto(
             nombre_archivo = nombre_archivo,
             ruta_archivo = ruta_archivo,
-            actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() + 1 #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
+            actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
         )
         session.add(nueva_foto)
         session.commit() #Mandamos los cambios
