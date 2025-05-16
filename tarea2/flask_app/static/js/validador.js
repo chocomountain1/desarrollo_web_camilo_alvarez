@@ -10,13 +10,18 @@ let select_region = document.getElementById("region");
 
 //Lógica para rss
 let select_rss = document.getElementById("rss");
+select_rss.name ="contacto"
 let ul = document.getElementById("ul_organizacion")
 const input_rss = document.createElement("input");
+input_rss.name="rss"
 input_rss.maxLength = "50";
 input_rss.minLength = "4";
 input_rss.placeholder = "Escribe tu nombre de usuario o la url de tu perfil ";
 input_rss.style.width = "300px";
 const list = document.createElement("li");
+list.style.display = "block"
+let boton_contacto = document.getElementById("boton_contacto");
+const select_contacto = select_rss.cloneNode(true)
 
 //lógica para tema
 const input_tema_otro = document.createElement("input");
@@ -31,7 +36,6 @@ input_tema_otro.placeholder = "Agrega una descripción"
 const list_tema = document.createElement("li");
 let ul_tema = document.getElementById("ul_tema");
 let boton_tema = document.getElementById("boton_tema");
-
 
 
 //lógica para foto
@@ -160,10 +164,37 @@ function mostrarComunas() {
 
 function mostrar_input_rss(){
     if(select_rss.value != ""){
-        list.appendChild(input_rss);
+        const clon_input = input_rss.cloneNode(true);
+        list.appendChild(clon_input);
         ul.appendChild(list)
     } else{
-        list.replaceChildren()
+
+    }
+}
+let i = 0;
+function mostrar_otro_contacto(){
+    if(i==0){
+        list.appendChild(select_contacto);
+        ul.appendChild(list)
+        select_contacto.addEventListener("change",mostrar_input_rss);
+        i+=1
+    }
+    else if(i>0 & i<=3){
+        const input_clon = select_contacto.cloneNode(true);
+        list.appendChild(input_clon);
+        ul.appendChild(list)
+        input_clon.addEventListener("change",mostrar_input_rss);
+        i +=1
+    }else if (i==4){
+        msg = document.createElement("p")
+        msg.textContent = "¡El máximo de contactos soportados es de 5!"
+        msg.style.color = "red"
+        msg.style.marginTop = "4px"
+        msg.style.marginLeft = "92px"
+        ul.appendChild(msg)
+        i +=1
+    }else{
+
     }
 }
 
@@ -176,51 +207,52 @@ function mostrar_input_tema_otro(){
     }
 }
 
-let i = 0; //definición de un contador fuera de la función para que no se actualice
+j=0; //definición de un contador fuera de la función para que no se actualice
 function mostrar_input_foto(){
-    if(i==0){
+    if(j==0){
         list_foto.appendChild(input_foto);
         ul_foto.appendChild(list_foto)
-        i+=1
+        j+=1
     }
-    else if(i>0 & i<=3){
+    else if(j>0 & j<=3){
         const input_clon = input_foto.cloneNode(true);
         list_foto.appendChild(input_clon);
         console.log(input_clon.name)
         ul_foto.appendChild(list_foto)
-        i +=1
-    }else if (i==4){
+        j +=1
+    }else if (j==4){
         msg = document.createElement("p")
         msg.textContent = "¡El máximo de fotos soportadas es de 5!"
         msg.style.color = "red"
         msg.style.marginTop = "4px"
         msg.style.marginLeft = "92px"
         ul_foto.appendChild(msg)
-        i +=1
+        j +=1
     }else{
 
     }
 }
 
+k=0
 function mostrar_input_tema(){
-    if(i==0){
+    if(k==0){
         list_tema.appendChild(input_tema);
         ul_tema.appendChild(list_tema)
-        i+=1
+        k+=1
     }
-    else if(i>0 & i<=3){
+    else if(k>0 & k<=3){
         const input_clon = input_tema.cloneNode(true);
         list_tema.appendChild(input_clon);
         ul_tema.appendChild(list_tema)
-        i +=1
-    }else if (i==4){
+        k +=1
+    }else if (k==4){
         msg = document.createElement("p")
         msg.textContent = "¡El máximo de temas es de 5!"
         msg.style.color = "red"
         msg.style.marginTop = "4px"
         msg.style.marginLeft = "92px"
         ul_tema.appendChild(msg)
-        i +=1
+        k +=1
     }else{
 
     }
@@ -360,6 +392,7 @@ function validar_telefono() {
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
 select_tema.addEventListener("change",mostrar_input_tema_otro);
+boton_contacto.addEventListener("click",mostrar_otro_contacto);
 boton_foto.addEventListener("click",mostrar_input_foto);
 boton_tema.addEventListener("click",mostrar_input_tema);
 input_sector.addEventListener('input', function(){
