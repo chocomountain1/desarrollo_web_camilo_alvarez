@@ -12,38 +12,37 @@ app = Flask(__name__)
 app.secret_key = "s3cr3t_k3y"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+##Definición de los datos necesarios para enviar por las rutas
+session = db.SessionLocal()
+    ##Actividades##
+
+actividades = session.query(db.Actividad).all() #Obtenemos todas las actividades desde la base de datos
+nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
+for actividad in actividades:
+    nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
+
+##Fotos##
+
+archivos = session.query(db.Foto).all() #obtenemos todas las fotos
+primeras_fotos = []
+vistos = []
+for archivo in archivos:
+    if archivo.actividad_id not in vistos:
+        primeras_fotos.append(archivo)
+        vistos.append(archivo.actividad_id)
+
+##Temas##
+
+max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar los temas
+temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
+lista_temas = []
+for i in range(1,max_id+1):
+    filtered = [e for e in temas if e.actividad_id == i]
+    lista_temas.append(filtered)
+
 #--Auth routes--#
 @app.route('/')
 def home():
-    session = db.SessionLocal()
-    ##Actividades##
-
-    actividades = session.query(db.Actividad).all() #Obtenemos todas las actividades desde la base de datos
-    nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
-    for actividad in actividades:
-        nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
-
-    ##Fotos##
-
-    archivos = session.query(db.Foto).all() #obtenemos todas las fotos
-    primeras_fotos = []
-    vistos = []
-    for archivo in archivos:
-        if archivo.actividad_id not in vistos:
-            primeras_fotos.append(archivo)
-            vistos.append(archivo.actividad_id)
-
-    ##Temas##
-
-    max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar los temas
-    temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
-    lista_temas = []
-    for i in range(1,max_id+1):
-        filtered = [e for e in temas if e.actividad_id == i]
-        lista_temas.append(filtered)
-    
-    print(len(actividades),len(nombres_comunas),len(primeras_fotos),len(lista_temas))
-    
     datos = list(zip(actividades,nombres_comunas,primeras_fotos,lista_temas)) #Hacemos una tupla con los datos que sea iterable
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array, los archivos (fotos)
 
@@ -113,6 +112,7 @@ def add_activity():
     
 @app.route('/activity_list',methods=["GET","POST"])
 def activity_list():
+    
     return render_template('listado_actividades.html')
 
 @app.route('/statistics',methods=["GET","POST"])
