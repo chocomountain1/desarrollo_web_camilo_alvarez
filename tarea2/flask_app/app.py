@@ -51,6 +51,8 @@ def home():
 def add_activity():
     if request.method == 'POST':
         session = db.SessionLocal() #Iniciamos una sesión en la base de datos
+
+
         ##Actividad##
         nueva_actividad = db.Actividad(
         nombre=request.form['nombre'],
@@ -91,6 +93,20 @@ def add_activity():
             actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
             )
             session.add(nuevo_tema) #Agregamos el tema
+
+        ##Contacto##
+        #si bien no lo usaremos para mostrar las actividades guardadas en la portada, aprovechamos de captarlos para agregarlos a la db
+
+        nombres = request.form.getlist('contacto')
+        identificadores = request.form.getlist('rss')
+        
+        for nombre,identificador in zip(nombres,identificadores):
+            nuevo_contacto = db.ContactarPor(
+                nombre = nombre,
+                identificador = identificador,
+                actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar()
+        )
+            session.add(nuevo_contacto)
         session.commit() #Mandamos los cambios
         return redirect(url_for('saved_msg'))
     return render_template('formulario_agregar_actividades.html')
