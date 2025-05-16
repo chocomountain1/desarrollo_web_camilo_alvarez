@@ -13,7 +13,7 @@
                 <th style="padding: 6px">Nombre del organizador</th>
                 <th style="padding: 6px;">Total de fotos</th>
             </tr>
-            {% for actividad,comuna,fotos,temas,contactos in datos %}
+            {% for actividad,comuna,temas,fotos,contactos in datos %}
             <tr id="tr"{{actividad.id}} style="cursor: pointer;">
                 <td style="padding: 6px;">2025-03-31 
                     <br>{{actividad.dia_hora_inicio}}
