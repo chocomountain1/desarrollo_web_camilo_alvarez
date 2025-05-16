@@ -1,136 +1,232 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
     <title>Formulario agregar actividad</title>
-        <form id="form" name="form" method="post" action="{{url_for('add_activity')}}" enctype="multipart/form-data">
-            <h1 style="display: flex; justify-content: center;">¿Dónde?</h1>
-            <div style="display: flex; justify-content: center;">
-                <ul style = "list-style: none;">
-                    <li id="li_region">
-                        <label for="region">Región:</label>
-                        <select id="region" name="region">
-                            <option value="">No seleccionada</option>
-                            <option value ="Región Arica y Parinacota">I Región de Arica y Parinacota</option>
-                            <option value ="Región de Tarapacá">II Región de Tarapacá</option>
-                            <option value ="Región de Antofagasta">III Región de Antofagasta</option>
-                            <option value ="Región de Atacama">IV Región de Atacama</option>
-                            <option value ="Región de Coquimbo ">V Región de Coquimbo</option>
-                            <option value ="Región de Valparaíso">VI Región de Valparaíso</option>
-                            <option value ="Región Metropolitana de Santiago ">VII Región Metropolitana</option>
-                            <option value ="Región del Libertador Bernardo Ohiggins">VIII Región de O'Higgins</option>
-                            <option value ="Región del Maule">IX Región del Maule</option>
-                            <option value ="Región del Ñuble">X Región del Ñuble</option>
-                            <option value ="Región del Biobío">XI Región del Biobío</option>
-                            <option value ="Región de La Araucanía">XII Región de La Araucanía</option>
-                            <option value ="Región de Los Ríos">XIII Región de Los Ríos</option>
-                            <option value ="Región de Los Lagos">XIV Región de Los Lagos</option>
-                            <option value ="Región Aisén del General Carlos Ibáñez del Campo">XV Región de Aysén</option>
-                            <option value ="Región de Magallanes y la Antártica Chilena">XVI Región de Magallanes</option>
-                        </select>
-                    </li>
-                    <li id="li_comuna">
-                        <label for="comuna">Comuna:</label>
-                        <select id="comuna" name="comuna">
-                            <option value="">No seleccionada</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="sector">Sector:</label>
-                        <input id="sector" name="sector" maxlength="100">
-                        <small id="contador">100 caracteres restantes</small>
-                    </li>
-                </ul>
-            </div>
-            <h1 style="display: flex; justify-content: center;">¿Quién organiza?</h1>
-            <div style="display: flex; justify-content: center;">
-                <ul id="ul_organizacion" style = "list-style: none;">
-                    <li id="li_nombre">
-                        <label for="nombre">Nombre:</label>
-                        <input id="nombre" name="nombre" maxlength="200">
-                        <small id="contador_nombre">200 caracteres restantes</small>
-                    </li>
-                    <li id="li_email">
-                        <label for="email">E-mail:</label>
-                        <input id="email" name="email" type="email" maxlength="100">
-                    </li>
-                    <li id="li_celu">
-                        <label for="telefono">Telefono:</label>
-                        <input id="tel" name="celular" type="tel" maxlength="12" placeholder="+NNN NNNNNNNN">
-                    </li>
-                        <label for="rss">Contactar por medio de:</label>
-                        <select id="rss" name="rss">
-                            <option value="">Sin seleccionar</option>
-                            <option value="whatsapp">Whatsapp</option>
-                            <option value="telegram">Telegram</option>
-                            <option value="X">X</option>
-                            <option value="instagram">Instagram</option>
-                            <option value="tiktok">Tiktok</option>
-                            <option value="otra">Otra</option>
-                        </select>
-                    <li style="display: inline; margin-right: 1rem;">
-                        <button id="boton_contacto" name="boton_contacto" type="button">Agregar otro contacto</button>
-                    </li>
-                </ul>
-            </div>
-            <h1 style="display: flex; justify-content: center;">¿Cuándo y de que trata?</h1>
-            <div style="display: flex; justify-content: center;">
-                <ul id="ul_tema" style = "list-style: none; padding-left: 0;">
-                    <li>
-                        <label for="inicio">Día/Hora/Inicio:</label>
-                        <input id="inicio" name = "dia_hora_inicio" type="datetime-local">
-                    </li>
-                    <li>
-                        <label for="final">Día/Hora/Término:</label>
-                        <input id="final" name = "dia_hora_termino" type="datetime-local">
-                    </li>
-                    <li>
-                        <label for="desc">Descripción:</label>
-                        <textarea id="desc" name="descripcion" placeholder="Ingresa tu descripción del evento" cols="50" rows="10"></textarea>
-                    </li>
-                    <li style="display:inline;margin-right: 1rem;">
-                        <label for="tema">Tema del evento:</label>
-                        <select id="tema" name="tema">
-                            <option value="">Sin seleccionar</option>
-                            <option value="musica">Música</option>
-                            <option value="deporte">Deporte</option>
-                            <option value="ciencias">Ciencias</option>
-                            <option value="religion">Religión</option>
-                            <option value="política">Política</option>
-                            <option value="tecnologia">Tecnología</option>
-                            <option value="juegos">Juegos</option>
-                            <option value="baile">Baile</option>
-                            <option value="comida">Comida</option>
-                            <option value="otro">Otro</option>
-                        </select>
-                    </li>
-                    <li style="display: inline; margin-right: 1rem;">
-                        <button id="boton_tema" name="boton_tema" type="button">Agregar otro tema</button>
-                    </li>
-                </ul>
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <ul id="ul_foto" style="list-style: none; padding-left: 0;">
-                    <li style="display: inline; margin-right: 1rem;">
-                        <label for="foto">Ingresar fotos:</label>
-                        <input id="foto" name="foto" type="file">
-                    </li>
-                    <li style="display: inline ;margin-right: 1rem;">
-                        <button id="boton_foto" name="boton_foto" type="button">Agregar otra foto</button>
-                    </li>
-                </ul>
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <ul style="list-style: none; padding-left: 0;">
-                    <li>
-                        <button id="boton_submit" type="button">Agregar esta actividad</button>
-                    </li>
-                </ul>
-            </div>
-            <div id="modal" style="display: none; position: fixed; top:1%; left:30%; background:white; padding:20px; border:1px solid black;">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        form {
+            max-width: 800px;
+            margin: auto;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        div.centered {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        li {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="datetime-local"],
+        select,
+        textarea {
+            width: 300px;
+            padding: 0.3rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        small {
+            margin-left: 10px;
+            color: gray;
+            font-size: 0.85rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 5%;
+            left: 30%;
+            background: white;
+            padding: 20px;
+            border: 1px solid black;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.25);
+        }
+        #modal p {
+            margin-bottom: 1rem;
+        }
+        #modal button {
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <form id="form" name="form" method="post" action="{{url_for('add_activity')}}" enctype="multipart/form-data">
+        <h1>¿Dónde?</h1>
+        <div class="centered">
+            <ul>
+                <li id="li_region">
+                    <label for="region">Región:</label>
+                    <select id="region" name="region">
+                        <option value="">No seleccionada</option>
+                        <option value="Región Arica y Parinacota">I Región de Arica y Parinacota</option>
+                        <option value="Región de Tarapacá">II Región de Tarapacá</option>
+                        <option value="Región de Antofagasta">III Región de Antofagasta</option>
+                        <option value="Región de Atacama">IV Región de Atacama</option>
+                        <option value="Región de Coquimbo ">V Región de Coquimbo</option>
+                        <option value="Región de Valparaíso">VI Región de Valparaíso</option>
+                        <option value="Región Metropolitana de Santiago ">VII Región Metropolitana</option>
+                        <option value="Región del Libertador Bernardo Ohiggins">VIII Región de O'Higgins</option>
+                        <option value="Región del Maule">IX Región del Maule</option>
+                        <option value="Región del Ñuble">X Región del Ñuble</option>
+                        <option value="Región del Biobío">XI Región del Biobío</option>
+                        <option value="Región de La Araucanía">XII Región de La Araucanía</option>
+                        <option value="Región de Los Ríos">XIII Región de Los Ríos</option>
+                        <option value="Región de Los Lagos">XIV Región de Los Lagos</option>
+                        <option value="Región Aisén del General Carlos Ibáñez del Campo">XV Región de Aysén</option>
+                        <option value="Región de Magallanes y la Antártica Chilena">XVI Región de Magallanes</option>
+                    </select>
+                </li>
+                <li id="li_comuna">
+                    <label for="comuna">Comuna:</label>
+                    <select id="comuna" name="comuna">
+                        <option value="">No seleccionada</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="sector">Sector:</label>
+                    <input id="sector" name="sector" maxlength="100" />
+                    <small id="contador">100 caracteres restantes</small>
+                </li>
+            </ul>
+        </div>
+
+        <h1>¿Quién organiza?</h1>
+        <div class="centered">
+            <ul id="ul_organizacion">
+                <li id="li_nombre">
+                    <label for="nombre">Nombre:</label>
+                    <input id="nombre" name="nombre" maxlength="200" />
+                    <small id="contador_nombre">200 caracteres restantes</small>
+                </li>
+                <li id="li_email">
+                    <label for="email">E-mail:</label>
+                    <input id="email" name="email" type="email" maxlength="100" />
+                </li>
+                <li id="li_celu">
+                    <label for="telefono">Teléfono:</label>
+                    <input id="tel" name="celular" type="tel" maxlength="12" placeholder="+NNN NNNNNNNN" />
+                </li>
+                <li>
+                    <label for="rss">Contactar por medio de:</label>
+                    <select id="rss" name="rss">
+                        <option value="">Sin seleccionar</option>
+                        <option value="whatsapp">Whatsapp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="X">X</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">Tiktok</option>
+                        <option value="otra">Otra</option>
+                    </select>
+                </li>
+                <li style="display: inline; margin-right: 1rem;">
+                    <button id="boton_contacto" name="boton_contacto" type="button">Agregar otro contacto</button>
+                </li>
+            </ul>
+        </div>
+
+        <h1>¿Cuándo y de qué trata?</h1>
+        <div class="centered">
+            <ul id="ul_tema">
+                <li>
+                    <label for="inicio">Día/Hora/Inicio:</label>
+                    <input id="inicio" name="dia_hora_inicio" type="datetime-local" />
+                </li>
+                <li>
+                    <label for="final">Día/Hora/Término:</label>
+                    <input id="final" name="dia_hora_termino" type="datetime-local" />
+                </li>
+                <li>
+                    <label for="desc">Descripción:</label>
+                    <textarea id="desc" name="descripcion" placeholder="Ingresa tu descripción del evento" cols="50" rows="10"></textarea>
+                </li>
+                <li style="display: inline; margin-right: 1rem;">
+                    <label for="tema">Tema del evento:</label>
+                    <select id="tema" name="tema">
+                        <option value="">Sin seleccionar</option>
+                        <option value="musica">Música</option>
+                        <option value="deporte">Deporte</option>
+                        <option value="ciencias">Ciencias</option>
+                        <option value="religion">Religión</option>
+                        <option value="política">Política</option>
+                        <option value="tecnologia">Tecnología</option>
+                        <option value="juegos">Juegos</option>
+                        <option value="baile">Baile</option>
+                        <option value="comida">Comida</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </li>
+                <li style="display: inline; margin-right: 1rem;">
+                    <button id="boton_tema" name="boton_tema" type="button">Agregar otro tema</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="centered">
+            <ul id="ul_foto">
+                <li style="display: inline; margin-right: 1rem;">
+                    <label for="foto">Ingresar fotos:</label>
+                    <input id="foto" name="foto" type="file" />
+                </li>
+                <li style="display: inline; margin-right: 1rem;">
+                    <button id="boton_foto" name="boton_foto" type="button">Agregar otra foto</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="centered">
+            <ul>
+                <li>
+                    <button id="boton_submit" type="button">Agregar esta actividad</button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="modal">
             <p>¿Está seguro de que quiere agregar esta actividad?</p>
             <a href="{{url_for('saved_msg')}}">
                 <button class="boton_portada" type="submit">Sí, estoy seguro</button>
             </a>
             <button id="boton_no">No, no estoy seguro, quiero volver al formulario</button>
         </div>
-        </form>
+    </form>
+
     <script src="{{url_for('static', filename='js/validador.js')}}"></script>
+</body>
 </html>
