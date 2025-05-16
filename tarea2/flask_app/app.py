@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = "s3cr3t_k3y"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 ##Definición de los datos necesarios para enviar por las rutas
 session = db.SessionLocal()
     ##Actividades##
@@ -53,10 +54,55 @@ for i in range(1,max_id+1):
     filtered = [e for e in contactos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
     lista_contactos.append(filtered)
 
+session.close() #Cerramos la sesión
+
 #--Auth routes--#
 @app.route('/')
 def home():
+        ##Definición de los datos necesarios para enviar por las rutas
+    session = db.SessionLocal()
+        ##Actividades##
+
+    actividades = session.query(db.Actividad).all() #Obtenemos todas las actividades desde la base de datos
+    nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
+    for actividad in actividades:
+        nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
+
+    ##Fotos##
+
+    archivos = session.query(db.Foto).all() #obtenemos todas las fotos
+    primeras_fotos = []
+    vistos = []
+    for archivo in archivos:
+        if archivo.actividad_id not in vistos:
+            primeras_fotos.append(archivo)
+            vistos.append(archivo.actividad_id)
+
+    max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar a que actividad pertenece cada foto,tema y contacto
+    lista_fotos = []
+    for i in range(1,max_id+1):
+        filtered = [e for e in archivos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
+        lista_fotos.append(filtered)
+
+    ##Temas##
+
+    temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
+    lista_temas = []
+    for i in range(1,max_id+1):
+        filtered = [e for e in temas if e.actividad_id == i] #Se usa list comprehension para agrupar por id en sublistas
+        lista_temas.append(filtered)
+
+    ##Contactos##
+
+    contactos = session.query(db.ContactarPor).all() #Obtenemos todos los contactos
+    lista_contactos = []
+    for i in range(1,max_id+1):
+        filtered = [e for e in contactos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
+        lista_contactos.append(filtered)
+
+    session.close() #Cerramos la sesión
     datos = list(zip(actividades,nombres_comunas,primeras_fotos,lista_temas)) #Hacemos una tupla con los datos que sea iterable
+    print(datos)
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array, los archivos (fotos)
 
 @app.route('/add_activity',methods=["GET","POST"])
@@ -124,6 +170,48 @@ def add_activity():
     
 @app.route('/activity_list',methods=["GET","POST"])
 def activity_list():
+    ##Definición de los datos necesarios para enviar por las rutas
+    session = db.SessionLocal()
+        ##Actividades##
+
+    actividades = session.query(db.Actividad).all() #Obtenemos todas las actividades desde la base de datos
+    nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
+    for actividad in actividades:
+        nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
+
+    ##Fotos##
+
+    archivos = session.query(db.Foto).all() #obtenemos todas las fotos
+    primeras_fotos = []
+    vistos = []
+    for archivo in archivos:
+        if archivo.actividad_id not in vistos:
+            primeras_fotos.append(archivo)
+            vistos.append(archivo.actividad_id)
+
+    max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar a que actividad pertenece cada foto,tema y contacto
+    lista_fotos = []
+    for i in range(1,max_id+1):
+        filtered = [e for e in archivos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
+        lista_fotos.append(filtered)
+
+    ##Temas##
+
+    temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
+    lista_temas = []
+    for i in range(1,max_id+1):
+        filtered = [e for e in temas if e.actividad_id == i] #Se usa list comprehension para agrupar por id en sublistas
+        lista_temas.append(filtered)
+
+    ##Contactos##
+
+    contactos = session.query(db.ContactarPor).all() #Obtenemos todos los contactos
+    lista_contactos = []
+    for i in range(1,max_id+1):
+        filtered = [e for e in contactos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
+        lista_contactos.append(filtered)
+
+    session.close() #Cerramos la sesión
     datos = zip(actividades,nombres_comunas,lista_temas,lista_fotos,lista_contactos)
     return render_template('listado_actividades.html',datos=datos) #Mandamos todos los datos que requiera el listado de actividades
 

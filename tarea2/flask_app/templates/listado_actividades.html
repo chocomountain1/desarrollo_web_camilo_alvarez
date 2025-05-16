@@ -26,9 +26,9 @@
                 <td style="padding: 6px;">
                 {% for tema in temas %}
                     {% if tema.glosa_otro == "no_aplica" %}                    
-                    {{tema.tema.value}}
+                        {{tema.tema.value}}
                     {% else %}
-                    {{tema.glosa_otro}}
+                        {{tema.glosa_otro}}
                     {% endif %}
                 {% endfor %}
                 </td>
