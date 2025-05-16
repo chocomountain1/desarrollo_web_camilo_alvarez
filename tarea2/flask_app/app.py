@@ -29,15 +29,16 @@ def home():
     primeras_fotos = []
     max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar()
     vistos = []
-    for i in range(max_id):
-        if archivos[i].actividad_id not in vistos:
-            primeras_fotos.append(archivos[i])
-            vistos.append(archivos[i].actividad_id)
-    
+    for archivo in archivos:
+        if archivo.actividad_id not in vistos:
+            primeras_fotos.append(archivo)
+            vistos.append(archivo.actividad_id)
+    print(vistos,max_id)
     ##Temas##
 
     temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
-    datos = list(zip(actividades,nombres_comunas,primeras_fotos,temas)) #Hacemos una tupla de largo 2 con ambos datos
+    print(len(actividades),len(nombres_comunas),len(primeras_fotos),len(temas))
+    datos = list(zip(actividades,nombres_comunas,primeras_fotos,temas)) #Hacemos una tupla con los datos que sea iterable
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array, los archivos (fotos)
 
 @app.route('/add_activity',methods=["GET","POST"])
@@ -75,7 +76,7 @@ def add_activity():
         ##Tema_actividad##
         glosa_otro = request.form.get('otro')
         if glosa_otro is None:
-            glosa_otro = ""
+            glosa_otro = "no_aplica"
         nuevo_tema = db.ActividadTema(
             tema=request.form['tema'],
             glosa_otro=glosa_otro,

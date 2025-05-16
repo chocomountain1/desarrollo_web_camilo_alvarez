@@ -34,11 +34,11 @@
                     <td style="padding: 6px;">{{nombre_comuna}}</td>
                     <td style="padding: 6px;">{{actividad.sector}}</td>
                     <td style="padding: 6px;">
-                        {% if tema.glosa_otro != "" %}
-                        {{tema.tema}}
-                        {% else %}
-                        {{tema.glosa_otro}}
-                        {% endif %}
+                    {% if tema.glosa_otro == "no_aplica" %}                    
+                    {{tema.tema.value}}
+                    {% else %}
+                    {{tema.glosa_otro}}
+                    {% endif %}
                     </td>
                     <td style="padding: 6px">
                         <img src="{{ archivo.ruta_archivo }}">

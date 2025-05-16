@@ -17,11 +17,16 @@ Base = declarative_base()
 
 # --- ENUMS ---
 class TemaEnum(str, enum.Enum):
-    medio_ambiente = "medio_ambiente"
-    seguridad = "seguridad"
-    salud = "salud"
-    educacion = "educacion"
-    otro = "otro"
+    música = "Música"
+    deporte = "Deporte"
+    ciencias = "Ciencias"
+    religión = "Religión"
+    política = "Política"
+    tecnología = "Tecnología"
+    juegos = "Juegos"
+    baile = "Baile"
+    comida = "Comida"
+    otro = "Otro"
 
 class ContactoEnum(str, enum.Enum):
     email = "email"
