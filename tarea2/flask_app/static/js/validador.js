@@ -19,15 +19,19 @@ input_rss.style.width = "300px";
 const list = document.createElement("li");
 
 //lógica para tema
-const input_tema = document.createElement("input");
-input_tema.name = "otro"
-input_tema.style.width = "300px"
-input_tema.minLength = "3"
-input_tema.maxLength = "15"
-input_tema.placeholder = "Agrega una descripción del tema de la actividad"
+const input_tema_otro = document.createElement("input");
+input_tema_otro.name = "otro";
 let select_tema = document.getElementById("tema");
+const input_tema = select_tema.cloneNode(true);
+input_tema.nombre = "tema";
+input_tema.style.display = "flex"
+input_tema.style.justifyContent = "center"
+input_tema.style.marginLeft = "100px"
+input_tema_otro.placeholder = "Agrega una descripción"
 const list_tema = document.createElement("li");
-let ul_tema = document.getElementById("ul_tema")
+let ul_tema = document.getElementById("ul_tema");
+let boton_tema = document.getElementById("boton_tema");
+
 
 
 //lógica para foto
@@ -163,12 +167,12 @@ function mostrar_input_rss(){
     }
 }
 
-function mostrar_input_tema(){
+function mostrar_input_tema_otro(){
     if(select_tema.value == "otro"){
-        list_tema.appendChild(input_tema);
+        list_tema.appendChild(input_tema_otro);
         ul_tema.appendChild(list_tema)
     } else{
-        list_tema.replaceChildren()
+
     }
 }
 
@@ -192,6 +196,30 @@ function mostrar_input_foto(){
         msg.style.marginTop = "4px"
         msg.style.marginLeft = "92px"
         ul_foto.appendChild(msg)
+        i +=1
+    }else{
+
+    }
+}
+
+function mostrar_input_tema(){
+    if(i==0){
+        list_tema.appendChild(input_tema);
+        ul_tema.appendChild(list_tema)
+        i+=1
+    }
+    else if(i>0 & i<=3){
+        const input_clon = input_tema.cloneNode(true);
+        list_tema.appendChild(input_clon);
+        ul_tema.appendChild(list_tema)
+        i +=1
+    }else if (i==4){
+        msg = document.createElement("p")
+        msg.textContent = "¡El máximo de temas es de 5!"
+        msg.style.color = "red"
+        msg.style.marginTop = "4px"
+        msg.style.marginLeft = "92px"
+        ul_tema.appendChild(msg)
         i +=1
     }else{
 
@@ -331,8 +359,9 @@ function validar_telefono() {
 //Definimos los eventos asociados a los elementos del formulario
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
-select_tema.addEventListener("change",mostrar_input_tema);
+select_tema.addEventListener("change",mostrar_input_tema_otro);
 boton_foto.addEventListener("click",mostrar_input_foto);
+boton_tema.addEventListener("click",mostrar_input_tema);
 input_sector.addEventListener('input', function(){
     actualizarContador(this,contador)
 });
