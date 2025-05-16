@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 import filetype
 import os
 from sqlalchemy import text
+from utils.validations import validar_archivo, validar_celular, validar_comuna, validar_email, validar_fechas,validar_fotos,validar_nombre,validar_region,validar_tema
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -15,46 +16,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ##Definición de los datos necesarios para enviar por las rutas
 session = db.SessionLocal()
-    ##Actividades##
-
-actividades = session.query(db.Actividad).all() #Obtenemos todas las actividades desde la base de datos
-nombres_comunas = [] #Definimos una estructura de datos (lista) que contendrá todas los nombres de las comunas seleccionadas por la query hecha a la base de datos
-for actividad in actividades:
-    nombres_comunas.append(session.query(db.Comuna).filter_by(id=actividad.comuna_id).first().nombre)#Aquí las agregamos
-
-##Fotos##
-
-archivos = session.query(db.Foto).all() #obtenemos todas las fotos
-primeras_fotos = []
-vistos = []
-for archivo in archivos:
-    if archivo.actividad_id not in vistos:
-        primeras_fotos.append(archivo)
-        vistos.append(archivo.actividad_id)
-
-max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar a que actividad pertenece cada foto,tema y contacto
-lista_fotos = []
-for i in range(1,max_id+1):
-    filtered = [e for e in archivos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
-    lista_fotos.append(filtered)
-
-##Temas##
-
-temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
-lista_temas = []
-for i in range(1,max_id+1):
-    filtered = [e for e in temas if e.actividad_id == i] #Se usa list comprehension para agrupar por id en sublistas
-    lista_temas.append(filtered)
-
-##Contactos##
-
-contactos = session.query(db.ContactarPor).all() #Obtenemos todos los contactos
-lista_contactos = []
-for i in range(1,max_id+1):
-    filtered = [e for e in contactos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
-    lista_contactos.append(filtered)
-
-session.close() #Cerramos la sesión
 
 #--Auth routes--#
 @app.route('/')
@@ -110,13 +71,26 @@ def add_activity():
         session = db.SessionLocal() #Iniciamos una sesión en la base de datos
 
         ##Actividad##
+        nombre=request.form['nombre']
+        validar_nombre(nombre)
+
+        email = request.form['email']
+        validar_email(email)
+
+        celular = request.form['celular']
+        validar_celular(celular)
+
+        dia_hora_inicio=request.form['dia_hora_inicio']
+        dia_hora_termino=request.form['dia_hora_termino']
+        validar_fechas(dia_hora_inicio,dia_hora_termino)
+
         nueva_actividad = db.Actividad(
-        nombre=request.form['nombre'],
+        nombre=nombre,
         sector=request.form['sector'],
-        email=request.form['email'],
-        celular=request.form['celular'],
-        dia_hora_inicio=request.form['dia_hora_inicio'],
-        dia_hora_termino=request.form['dia_hora_termino'],
+        email=email,
+        celular=celular,
+        dia_hora_inicio=dia_hora_inicio,
+        dia_hora_termino=dia_hora_termino,
         descripcion=request.form['descripcion'],
         comuna_id=request.form['comuna']
         ) #Preguntamos al form por los datos correspondientes a la actividad que estamos agregando
@@ -125,6 +99,7 @@ def add_activity():
         ##Fotos_actividad##
         session.commit() #necesitamos que se cree antes la actividad que su foto, debido a que si no la llave foránea de Foto apuntará a un id que no existe
         files = request.files.getlist('foto') #Guardamos los files de la fotos en una lista de files
+        validar_fotos(files)
         for file in files:
             nombre_archivo = secure_filename(file.filename) #Accedemos de forma segura al nombre del archivo
             ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos la ruta del archivo en uploads de static, definido por flask
@@ -134,11 +109,12 @@ def add_activity():
                 ruta_archivo = ruta_archivo,
                 actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
             )
-            session.add(nueva_foto)
+            session.add(nueva_foto) 
         session.commit() #Mandamos los cambios
 
         ##Tema_actividad##
         temas = request.form.getlist('tema')
+        validar_tema(temas)
         glosa_otro = request.form.get('otro')
         if glosa_otro is None:
             glosa_otro = "no_aplica"

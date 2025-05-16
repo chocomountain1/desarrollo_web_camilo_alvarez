@@ -41,7 +41,7 @@ def validar_fechas(inicio_str, termino_str):
         return False
 
 def validar_tema(temas):
-    for tema in temas:
+    for tema in temas or tema == "":
         if not tema:
             return "La elección de almenos un tema es obligatorio", 400
         
