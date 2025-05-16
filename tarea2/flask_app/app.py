@@ -102,7 +102,6 @@ def home():
 
     session.close() #Cerramos la sesión
     datos = list(zip(actividades,nombres_comunas,primeras_fotos,lista_temas)) #Hacemos una tupla con los datos que sea iterable
-    print(datos)
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array, los archivos (fotos)
 
 @app.route('/add_activity',methods=["GET","POST"])

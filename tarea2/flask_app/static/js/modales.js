@@ -14,12 +14,12 @@ let tr5=document.getElementById("tr5");
 let modal = document.getElementById("modal_listado")
 
 //Lógica para que las fotos sean responsivas
-let futbol1 = document.getElementById("futbol1")
+let futbol1 = document.getElementById("foto1")
 let modal_foto1 = document.getElementById("modal_foto1")
 let div_imagenes1 = document.getElementById("imagenes1")
 let boton_foto1 = document.getElementById("boton_foto1")
 
-let futbol2 = document.getElementById("futbol2")
+let futbol2 = document.getElementById("foto2")
 let modal_foto2 = document.getElementById("modal_foto2")
 let boton_foto2 = document.getElementById("boton_foto2")
 //Creamos la función que muestra la modal
@@ -34,12 +34,15 @@ function mostrar_modal(tr){
     document.getElementById("nombre").textContent = "Nombre del organizador: " + celdas[5].textContent;
     for(let i=7;i<Array.from(celdas).length;i++){
         const celda_img = celdas[i]
-        const img = celda_img.querySelector("img")
-        img.style.display = "block"
-        img.style.padding = "3%"
-        img.style.cursor = "pointer"
-        img.className = "img_responsive"
-        document.getElementById("div_imagenes").appendChild(img)
+        const img_list = celda_img.querySelectorAll('img#foto')
+        for(let i =0; i< img_list.length; i++){
+            const img = img_list[i]
+            img.style.display = "block"
+            img.style.padding = "3%"
+            img.style.cursor = "pointer"
+            img.className = "img_responsive"
+            document.getElementById("div_imagenes").appendChild(img)
+        }
     }
 
     modal.style.display = "block"

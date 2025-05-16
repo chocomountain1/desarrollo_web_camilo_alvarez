@@ -14,7 +14,7 @@
                 <th style="padding: 6px;">Total de fotos</th>
             </tr>
             {% for actividad,comuna,temas,fotos,contactos in datos %}
-            <tr id="tr"{{actividad.id}} style="cursor: pointer;">
+            <tr id="tr{{actividad.id}}" style="cursor: pointer;">
                 <td style="padding: 6px;">2025-03-31 
                     <br>{{actividad.dia_hora_inicio}}
                 </td>
@@ -34,11 +34,13 @@
                 </td>
                 <td style="padding: 6px;">{{actividad.nombre}}</td>
                 <td style="padding: 6px;">{{ fotos | length }}</td>
-            {% endfor %}
                 <td>
-                    <img id="futbol1" style="display: none; width: 320; height:240;" src="{{ruta_archivos}}">
+                {% for foto in fotos %}
+                    <img id="foto" style="display: none; width: 320; height:240;" src="{{foto.ruta_archivo}}">
+                {% endfor %}
                 </td>
             </tr>
+            {% endfor %}
         </table>
     </div>
     <div id="modal_listado" style="display: none; position: absolute; margin-left: 25%; top:1%; background:white; padding:20px; border:1px solid black;">
