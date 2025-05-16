@@ -3,19 +3,17 @@
 //Por cada tr, tenemos que traer a su vez sus td asociados
 
 let tr_list = document.getElementById("div").querySelectorAll("tr#tr")
-console.log(tr_list)
 
 let modal = document.getElementById("modal_listado")
 
 //Lógica para que las fotos sean responsivas
-let futbol1 = document.getElementById("foto1")
-let modal_foto1 = document.getElementById("modal_foto1")
-let div_imagenes1 = document.getElementById("imagenes1")
-let boton_foto1 = document.getElementById("boton_foto1")
+let foto_list = document.querySelectorAll("img#foto")
+console.log(foto_list)
+let modal_foto_list = document.querySelectorAll("div#modal_foto")
+console.log(modal_foto_list)
+let boton_foto_list = document.querySelectorAll("button#boton_foto")
+console.log(boton_foto_list)
 
-let futbol2 = document.getElementById("foto2")
-let modal_foto2 = document.getElementById("modal_foto2")
-let boton_foto2 = document.getElementById("boton_foto2")
 //Creamos la función que muestra la modal
 
 function mostrar_modal(tr){
@@ -45,24 +43,16 @@ function mostrar_modal(tr){
 }
 
 //Creamos la función para poder agrandar la imagen
-function mostrar_modal_foto1(){
+function mostrar_modal_foto(i){
     modal.style.display = "none" //escondemos la modal anterior
-    modal_foto1.style.display="block" //mostramos la nueva modal con la imagen redimensionada
+    modal_foto_list[i].style.display="block" //mostramos la nueva modal con la imagen redimensionada
 }
 
-function volver_modal1(){
+function volver_modal(i){
     modal.style.display="block"
-    modal_foto1.style.display = "none"
-}
-function mostrar_modal_foto2(){
-    modal.style.display = "none"
-    modal_foto2.style.display = "block"
+    modal_foto_list[i].style.display = "none"
 }
 
-function volver_modal2(){
-    modal.style.display="block"
-    modal_foto2.style.display="none"
-}
 //Creamos los eventos asociados a los elementos html
 for(let i =0; i< tr_list.length; i++){
     tr_list[i].addEventListener("click",function(){
@@ -70,14 +60,14 @@ for(let i =0; i< tr_list.length; i++){
     });
 }
 
-futbol1.addEventListener("click",function(){
-    mostrar_modal_foto1()
-})
+for(let i=0; i<foto_list.length;i++){
+    foto_list[i].addEventListener("click",function(){
+        mostrar_modal_foto(i)
+        });
+}
 
-boton_foto1.addEventListener("click",volver_modal1)
-
-futbol2.addEventListener("click",function(){
-    mostrar_modal_foto2()
-})
-
-boton_foto2.addEventListener("click",volver_modal2)
+for(let i=0; i<foto_list.length;i++){
+    boton_foto_list[i].addEventListener("click",function(){
+        volver_modal(i)
+    });
+}
