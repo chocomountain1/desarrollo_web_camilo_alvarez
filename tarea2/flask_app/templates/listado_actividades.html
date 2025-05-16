@@ -13,18 +13,28 @@
                 <th style="padding: 6px">Nombre del organizador</th>
                 <th style="padding: 6px;">Total de fotos</th>
             </tr>
-            <tr id="tr1" style="cursor: pointer;">
+            {% for actividad,comuna,fotos,temas,contactos in datos %}
+            <tr id="tr"{{actividad.id}} style="cursor: pointer;">
                 <td style="padding: 6px;">2025-03-31 
-                    <br>{{horainiciio}}
+                    <br>{{actividad.dia_hora_inicio}}
                 </td>
                 <td style="padding: 6px">2025-03.31
-                    <br>{{horatermino}}
+                    <br>{{actividad.dia_hora_termino}}
                 </td>
-                <td style="padding: 6px;">{{nombrecomuna}}</td>
-                <td style="padding: 6px;">{{sector}}</td>
-                <td style="padding: 6px;">{{temas}}</td>
-                <td style="padding: 6px;">{{nombre organizador}}</td>
-                <td style="padding: 6px;">2</td>
+                <td style="padding: 6px;">{{comuna}}</td>
+                <td style="padding: 6px;">{{actividad.sector}}</td>
+                <td style="padding: 6px;">
+                {% for tema in temas %}
+                    {% if tema.glosa_otro == "no_aplica" %}                    
+                    {{tema.tema.value}}
+                    {% else %}
+                    {{tema.glosa_otro}}
+                    {% endif %}
+                {% endfor %}
+                </td>
+                <td style="padding: 6px;">{{actividad.nombre}}</td>
+                <td style="padding: 6px;">{{ fotos | length }}</td>
+            {% endfor %}
                 <td>
                     <img id="futbol1" style="display: none; width: 320; height:240;" src="{{ruta_archivos}}">
                 </td>

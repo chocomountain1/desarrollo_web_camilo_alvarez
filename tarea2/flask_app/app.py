@@ -124,7 +124,7 @@ def add_activity():
     
 @app.route('/activity_list',methods=["GET","POST"])
 def activity_list():
-    datos = zip(actividades,lista_temas,lista_fotos,lista_contactos)
+    datos = zip(actividades,nombres_comunas,lista_temas,lista_fotos,lista_contactos)
     return render_template('listado_actividades.html',datos=datos) #Mandamos todos los datos que requiera el listado de actividades
 
 @app.route('/statistics',methods=["GET","POST"])
