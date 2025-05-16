@@ -212,7 +212,7 @@ def activity_list():
 
     session.close() #Cerramos la sesión
     datos = zip(actividades,nombres_comunas,lista_temas,lista_fotos,lista_contactos)
-    return render_template('listado_actividades.html',datos=datos) #Mandamos todos los datos que requiera el listado de actividades
+    return render_template('listado_actividades.html',datos=datos,lista_fotos=lista_fotos) #Mandamos todos los datos que requiera el listado de actividades
 
 @app.route('/statistics',methods=["GET","POST"])
 def statistics():

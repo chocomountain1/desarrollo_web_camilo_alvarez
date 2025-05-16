@@ -1,15 +1,9 @@
 //Traemos los elementos necesarios para crear la modal que mostrará la información de cada fila al ser clickeada
 
 //Por cada tr, tenemos que traer a su vez sus td asociados
-let tr1=document.getElementById("tr1");
 
-let tr2=document.getElementById("tr2");
-
-let tr3=document.getElementById("tr3");
-
-let tr4=document.getElementById("tr4");
-
-let tr5=document.getElementById("tr5");
+let tr_list = document.getElementById("div").querySelectorAll("tr#tr")
+console.log(tr_list)
 
 let modal = document.getElementById("modal_listado")
 
@@ -70,21 +64,11 @@ function volver_modal2(){
     modal_foto2.style.display="none"
 }
 //Creamos los eventos asociados a los elementos html
-tr1.addEventListener("click",function(){
-    mostrar_modal(this); //le mandamos una instancia de tr1, por lo tanto, va a mandar a la función la información de la fila clickeada
-});
-tr2.addEventListener("click",function(){
-    mostrar_modal(this);
-});
-tr3.addEventListener("click",function(){
-    mostrar_modal(this);
-});
-tr4.addEventListener("click",function(){
-    mostrar_modal(this);
-});
-tr5.addEventListener("click",function(){
-    mostrar_modal(this);
-});
+for(let i =0; i< tr_list.length; i++){
+    tr_list[i].addEventListener("click",function(){
+        mostrar_modal(this); //le mandamos una instancia de tr, por lo tanto, va a mandar a la función la información de la fila clickeada
+    });
+}
 
 futbol1.addEventListener("click",function(){
     mostrar_modal_foto1()

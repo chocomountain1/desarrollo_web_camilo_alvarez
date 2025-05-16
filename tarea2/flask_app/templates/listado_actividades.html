@@ -14,7 +14,7 @@
                 <th style="padding: 6px;">Total de fotos</th>
             </tr>
             {% for actividad,comuna,temas,fotos,contactos in datos %}
-            <tr id="tr{{actividad.id}}" style="cursor: pointer;">
+            <tr id="tr" style="cursor: pointer;">
                 <td style="padding: 6px;">2025-03-31 
                     <br>{{actividad.dia_hora_inicio}}
                 </td>
@@ -62,21 +62,15 @@
             </a>
         </div>
     </div>
+    {% for foto in lista_foto %}
     <div id="modal_foto1" style="display: none; position: relative; top:1%; background:white; padding:20px;">
         <div id="imagenes1" style="display: flex; justify-content: center; align-items: center;">
-            <img src="futbol_800x600.png">
+            <img src="{{foto.ruta_archivo}}">
         </div>
         <div class="contenedor_boton">
             <button id="boton_foto1" class="boton_portada" type="button">Cerrar</button>
         </div>
     </div>
-    <div id="modal_foto2" style="display: none; position: relative; top:1%; background:white; padding:20px;">
-        <div id="imagenes2" style="display: flex; justify-content: center; align-items: center;">
-            <img src="futbol2_800x600.png">
-        </div>
-        <div class="contenedor_boton">
-            <button id="boton_foto2" class="boton_portada" type="button">Cerrar</button>
-        </div>
-    </div>
+    {% endfor %}
 <script src="{{url_for('static', filename='js/modales.js')}}"></script>
 </html>
