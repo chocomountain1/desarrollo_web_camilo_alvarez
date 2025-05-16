@@ -31,14 +31,27 @@ for archivo in archivos:
         primeras_fotos.append(archivo)
         vistos.append(archivo.actividad_id)
 
+max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar a que actividad pertenece cada foto,tema y contacto
+lista_fotos = []
+for i in range(1,max_id+1):
+    filtered = [e for e in archivos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
+    lista_fotos.append(filtered)
+
 ##Temas##
 
-max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar los temas
 temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
 lista_temas = []
 for i in range(1,max_id+1):
-    filtered = [e for e in temas if e.actividad_id == i]
+    filtered = [e for e in temas if e.actividad_id == i] #Se usa list comprehension para agrupar por id en sublistas
     lista_temas.append(filtered)
+
+##Contactos##
+
+contactos = session.query(db.ContactarPor).all() #Obtenemos todos los contactos
+lista_contactos = []
+for i in range(1,max_id+1):
+    filtered = [e for e in contactos if e.actividad_id == i] #se usa list comprehension para agrupar por id en sublist
+    lista_contactos.append(filtered)
 
 #--Auth routes--#
 @app.route('/')
@@ -50,7 +63,6 @@ def home():
 def add_activity():
     if request.method == 'POST':
         session = db.SessionLocal() #Iniciamos una sesión en la base de datos
-
 
         ##Actividad##
         nueva_actividad = db.Actividad(
@@ -112,8 +124,8 @@ def add_activity():
     
 @app.route('/activity_list',methods=["GET","POST"])
 def activity_list():
-    
-    return render_template('listado_actividades.html')
+    datos = zip(actividades,lista_temas,lista_fotos,lista_contactos)
+    return render_template('listado_actividades.html',datos=datos) #Mandamos todos los datos que requiera el listado de actividades
 
 @app.route('/statistics',methods=["GET","POST"])
 def statistics():
