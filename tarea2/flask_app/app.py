@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect,url_for, session
+from flask import Flask, request, render_template, redirect,url_for, session, flash
 from database import db
 from werkzeug.utils import secure_filename
 import filetype
@@ -72,17 +72,21 @@ def add_activity():
 
         ##Actividad##
         nombre=request.form['nombre']
-        validar_nombre(nombre)
+        if type(validar_nombre(nombre)) == str:
+            flash(validar_nombre)
 
         email = request.form['email']
         validar_email(email)
 
         celular = request.form['celular']
-        validar_celular(celular)
+        if celular != "":
+            validar_celular(celular)
 
         dia_hora_inicio=request.form['dia_hora_inicio']
         dia_hora_termino=request.form['dia_hora_termino']
-        validar_fechas(dia_hora_inicio,dia_hora_termino)
+        if not validar_fechas(dia_hora_inicio,dia_hora_termino):
+            flash("hola")
+            return redirect(url_for('add_activity'))
 
         nueva_actividad = db.Actividad(
         nombre=nombre,

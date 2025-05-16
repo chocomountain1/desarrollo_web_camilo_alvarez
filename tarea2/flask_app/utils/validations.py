@@ -6,15 +6,15 @@ import filetype
 
 def validar_nombre(nombre):
     if not nombre:
-        return "El nombre es obligatorio", 400
+        return "El nombre es obligatorio"
 
 def validar_region(region):
     if not region:
-        return "La región no fue seleccionada", 400
+        return "La región no fue seleccionada"
     
 def validar_comuna(comuna):
     if not comuna:
-        return "La comuna no fue seleccionada", 400
+        return "La comuna no fue seleccionada"
     
 def validar_archivo(files):
     for file in files:
@@ -23,14 +23,11 @@ def validar_archivo(files):
             return "Archivo no válido. Debe ser una imagen", 400 #Buscamos que los archivos sean solo de tipo image
     
 def validar_email(email):
-    return re.match(r"[^@]+@[^@]+\.[^@]+",email) #Buscamos un correo del tipo algo + @ + algo + . + algo
-
+    if not bool(re.match(r"[^@]+@[^@]+\.[^@]+",email)): #Buscamos un correo del tipo algo + @ + algo + . + algo
+        return "Correo inválido, se necesita formato @dominio.()"
 def validar_celular(celular):
-    if celular == "":
-        return 
-    else:
-        if not celular[1:].isdigit():
-            return "El celular debe ser numérico", 400
+    if not celular[1:].isdigit():
+        return "El celular debe ser numérico"
 
 def validar_fechas(inicio_str, termino_str):
     try:
@@ -43,9 +40,9 @@ def validar_fechas(inicio_str, termino_str):
 def validar_tema(temas):
     for tema in temas or tema == "":
         if not tema:
-            return "La elección de almenos un tema es obligatorio", 400
+            return "La elección de almenos un tema es obligatorio"
         
 def validar_fotos(fotos):
     for foto in fotos:
         if not foto:
-            return "La elección de almenos una foto es obligatoria", 400
+            return "La elección de almenos una foto es obligatoria"
