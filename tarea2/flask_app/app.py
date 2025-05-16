@@ -27,18 +27,24 @@ def home():
 
     archivos = session.query(db.Foto).all() #obtenemos todas las fotos
     primeras_fotos = []
-    max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar()
     vistos = []
     for archivo in archivos:
         if archivo.actividad_id not in vistos:
             primeras_fotos.append(archivo)
             vistos.append(archivo.actividad_id)
-    print(vistos,max_id)
+
     ##Temas##
 
+    max_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Necesitamos el max_id para desambiguar los temas
     temas = session.query(db.ActividadTema).all() #Obtenemos todos los temas de las actividades
-    print(len(actividades),len(nombres_comunas),len(primeras_fotos),len(temas))
-    datos = list(zip(actividades,nombres_comunas,primeras_fotos,temas)) #Hacemos una tupla con los datos que sea iterable
+    lista_temas = []
+    for i in range(1,max_id+1):
+        filtered = [e for e in temas if e.actividad_id == i]
+        lista_temas.append(filtered)
+    
+    print(len(actividades),len(nombres_comunas),len(primeras_fotos),len(lista_temas))
+    
+    datos = list(zip(actividades,nombres_comunas,primeras_fotos,lista_temas)) #Hacemos una tupla con los datos que sea iterable
     return render_template('portada.html',datos=datos) #Le pasamos las actividades que estan en db, junto con los nombres de las comunas en un array, los archivos (fotos)
 
 @app.route('/add_activity',methods=["GET","POST"])
@@ -74,15 +80,17 @@ def add_activity():
         session.commit() #Mandamos los cambios
 
         ##Tema_actividad##
+        temas = request.form.getlist('tema')
         glosa_otro = request.form.get('otro')
         if glosa_otro is None:
             glosa_otro = "no_aplica"
-        nuevo_tema = db.ActividadTema(
-            tema=request.form['tema'],
+        for tema in temas:
+            nuevo_tema = db.ActividadTema(
+            tema=tema,
             glosa_otro=glosa_otro,
             actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
-        )
-        session.add(nuevo_tema) #Agregamos el tema
+            )
+            session.add(nuevo_tema) #Agregamos el tema
         session.commit() #Mandamos los cambios
         return redirect(url_for('saved_msg'))
     return render_template('formulario_agregar_actividades.html')
