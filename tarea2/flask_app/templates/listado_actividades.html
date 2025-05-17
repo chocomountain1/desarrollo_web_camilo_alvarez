@@ -201,7 +201,6 @@
     }
 
     </style>
-    <link rel="stylesheet" href="/desarrollo_web_camilo_alvarez/diseño.css">
 </head>
 <body>
     <h1 id="h1">Listado de actividades</h1>
@@ -253,6 +252,11 @@
             </tbody>
         </table>
     </div>
+    <div class="contenedor_boton" style="padding: 5%;">
+            <a href="{{url_for('home')}}">
+                <button class="boton_portada" type="button">Quiero volver a la portada</button>
+            </a>
+        </div>
 
     <div id="modal_listado">
         <h1>Detalles de la actividad</h1>
@@ -264,10 +268,10 @@
         <p id="nombre"></p>
         <div id="div_imagenes"></div>
         <div class="contenedor_boton">
-            <a href="/desarrollo_web_camilo_alvarez/portada/portada.html">
+            <a href="{{url_for('home')}}">
                 <button class="boton_portada" type="button">Quiero volver a la portada</button>
             </a>
-            <a href="listado_actividades.html">
+            <a href="{{url_for('activity_list')}}">
                 <button class="boton_portada" type="button">Quiero volver a la lista de actividades</button>
             </a>
         </div>
@@ -277,7 +281,7 @@
         {% for foto in fotos %}
         <div id="modal_foto">
             <div id="imagenes">
-                <img id="imagen" src="{{foto.ruta_archivo}}" alt="Foto detalle">
+                <img id="imagen" src="{{foto.ruta_archivo}}" alt="Foto detalle" width="800" height="600">
             </div>
             <div class="contenedor_boton">
                 <button id="boton_foto" class="boton_portada" type="button">Cerrar</button>
