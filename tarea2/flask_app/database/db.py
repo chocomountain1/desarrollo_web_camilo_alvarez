@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, text
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import enum
 
@@ -108,3 +108,42 @@ class Foto(Base):
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
     actividad = relationship("Actividad", back_populates="fotos")
+
+# ---Database Functions--- #
+
+def create_activity(nombre,email,celular,sector,dia_hora_inicio,dia_hora_termino,descripcion,comuna_id):
+    session = SessionLocal()
+    nueva_actividad = Actividad(
+        nombre=nombre,
+        sector=sector,
+        email=email,
+        celular=celular,
+        dia_hora_inicio=dia_hora_inicio,
+        dia_hora_termino=dia_hora_termino,
+        descripcion=descripcion,
+        comuna_id=comuna_id
+        ) #Preguntamos al form por los datos correspondientes a la actividad que estamos agregando
+    session.add(nueva_actividad) #Agregamos la actividad a la respectiva tabla de Actividad definida en db
+    session.commit()
+    session.close()
+
+def register_activity(nombre,email,celular,sector,dia_hora_inicio,dia_hora_termino,descripcion,comuna_id):
+    create_activity(nombre=nombre,email=email,celular=celular,sector=sector,dia_hora_inicio=dia_hora_inicio,dia_hora_termino=dia_hora_termino,descripcion=descripcion,comuna_id=comuna_id)
+    return True,""
+
+def create_photo(nombres_archivos,rutas_archivos):
+    session = SessionLocal()
+    data_archivos = zip(nombres_archivos,rutas_archivos)
+    for nombre_archivo,ruta_archivo in data_archivos:
+        nueva_foto = Foto(
+                    nombre_archivo = nombre_archivo,
+                    ruta_archivo = ruta_archivo,
+                    actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
+                )
+        session.add(nueva_foto) 
+        session.commit() #Mandamos los cambios
+        session.close()
+
+def register_photo(nombres_archivos, rutas_archivos):
+    create_photo(nombres_archivos=nombres_archivos, rutas_archivos=rutas_archivos)
+    return True,""

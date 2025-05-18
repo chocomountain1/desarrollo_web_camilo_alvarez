@@ -1,10 +1,11 @@
-from flask import Flask, request, render_template, redirect,url_for, session, flash
+from flask import Flask, request, render_template, redirect,url_for, session as flask_session, flash
+from utils.validations import validate_add_activity
 from database import db
 from werkzeug.utils import secure_filename
 import filetype
 import os
 from sqlalchemy import text
-from utils.validations import validar_archivo, validar_celular, validar_comuna, validar_email, validar_fechas,validar_fotos,validar_nombre,validar_region,validar_tema
+from utils.validations import validar_archivo, validar_celular, validar_comuna, validar_email,validar_fotos,validar_nombre,validar_region,validar_tema
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -68,57 +69,54 @@ def home():
 @app.route('/add_activity',methods=["GET","POST"])
 def add_activity():
     if request.method == 'POST':
-        session = db.SessionLocal() #Iniciamos una sesión en la base de datos
 
         ##Actividad##
         nombre=request.form['nombre']
-        if type(validar_nombre(nombre)) == str:
-            flash(validar_nombre)
-
         email = request.form['email']
-        validar_email(email)
-
         celular = request.form['celular']
-        if celular != "":
-            validar_celular(celular)
-
+        sector = request.form['sector']
         dia_hora_inicio=request.form['dia_hora_inicio']
         dia_hora_termino=request.form['dia_hora_termino']
-        if not validar_fechas(dia_hora_inicio,dia_hora_termino):
-            flash("hola")
+        descripcion = request.form['descripcion']
+        comuna_id = request.form['comuna']
+
+        error = "" #por ahora el error queda vacío
+
+        flask_session["form_data"] = {"nombre": nombre, "sector": sector, "email": email, "celular":celular, "dia_hora_inicio":dia_hora_inicio, "dia_hora_termino": dia_hora_termino, "descripcion": descripcion, "comuna":comuna_id}
+        if validate_add_activity(nombre,email,celular):
+            #lo tratamos de registrar en la base de datos, llamando la funcion que se encarga de eso
+            status, msg = db.register_activity(nombre,email,celular,sector,dia_hora_inicio,dia_hora_termino,descripcion,comuna_id)
+        else:
+            error += msg
+            flash(error)
             return redirect(url_for('add_activity'))
-
-        nueva_actividad = db.Actividad(
-        nombre=nombre,
-        sector=request.form['sector'],
-        email=email,
-        celular=celular,
-        dia_hora_inicio=dia_hora_inicio,
-        dia_hora_termino=dia_hora_termino,
-        descripcion=request.form['descripcion'],
-        comuna_id=request.form['comuna']
-        ) #Preguntamos al form por los datos correspondientes a la actividad que estamos agregando
-        session.add(nueva_actividad) #Agregamos la actividad a la respectiva tabla de Actividad definida en db
-
+            
         ##Fotos_actividad##
-        session.commit() #necesitamos que se cree antes la actividad que su foto, debido a que si no la llave foránea de Foto apuntará a un id que no existe
-        files = request.files.getlist('foto') #Guardamos los files de la fotos en una lista de files
-        validar_fotos(files)
-        for file in files:
-            nombre_archivo = secure_filename(file.filename) #Accedemos de forma segura al nombre del archivo
-            ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos la ruta del archivo en uploads de static, definido por flask
-            file.save(ruta_archivo) #Guardamos el file en esta carpeta para mostrarla en el futuro ya que sabemos donde se guardó
-            nueva_foto = db.Foto(
-                nombre_archivo = nombre_archivo,
-                ruta_archivo = ruta_archivo,
-                actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar() #Aquí ejecutamos una instruccion de SQL para obtener el proximo id de la actividad
-            )
-            session.add(nueva_foto) 
-        session.commit() #Mandamos los cambios
 
+        files = request.files.getlist('foto') #Guardamos los files de la fotos en una lista de files
+        lista_nombres = [] #guardamos los nombres para despues pasarselos al html en caso de errores de envio
+        rutas_archivos = []
+        if not validar_archivo(files=files):
+            msg = "¡Tipos de archivos subidos no válidos!"
+            error += msg
+            flash(error)
+            return redirect(url_for('add_activity'))
+        for file in files:
+             nombre_archivo = secure_filename(file.filename) #Accedemos de forma segura al nombre del archivo
+             lista_nombres.append(nombre_archivo)
+             ruta_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo) #Guardamos la ruta del archivo en uploads de static, definido por flask
+             rutas_archivos.append(ruta_archivo)
+             file.save(ruta_archivo) #Guardamos el file en esta carpeta para mostrarla en el futuro ya que sabemos donde se guardó
+        if validar_fotos(lista_nombres):
+            status, msg = db.register_photo(nombres_archivos=lista_nombres,rutas_archivos=rutas_archivos)
+        else:
+            msg = "¡Almenos debe haber una foto!"
+            error += msg
+            flash(error)
+            return redirect(url_for('add_activity'))
+        
         ##Tema_actividad##
         temas = request.form.getlist('tema')
-        validar_tema(temas)
         glosa_otro = request.form.get('otro')
         if glosa_otro is None:
             glosa_otro = "no_aplica"
@@ -144,8 +142,13 @@ def add_activity():
         )
             session.add(nuevo_contacto)
         session.commit() #Mandamos los cambios
+
+        flask_session.pop("form_data",None) #Sacamos los datos guardados pues fueron aceptados
         return redirect(url_for('saved_msg'))
-    return render_template('formulario_agregar_actividades.html')
+    #El método es GET
+    datos = flask_session.get("form_data", {})
+    return render_template('formulario_agregar_actividades.html', datos = datos)
+    
     
 @app.route('/activity_list',methods=["GET","POST"])
 def activity_list():

@@ -127,6 +127,17 @@
 </head>
 <body>
     <div id="form-container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flash-messages">
+                {% for message in messages %}
+                    <li>
+                        {{ message}}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
         <form id="form" name="form" method="post" action="{{url_for('add_activity')}}" enctype="multipart/form-data">
             <div class="section-container">
             <h1>¿Dónde?</h1>
@@ -162,7 +173,7 @@
                     </li>
                     <li>
                         <label for="sector">Sector:</label>
-                        <input id="sector" name="sector" maxlength="100" />
+                        <input id="sector" name="sector" maxlength="100" value="{{ datos.get('sector','')}}"/>
                         <small id="contador">100 caracteres restantes</small>
                     </li>
                 </ul>
@@ -174,17 +185,17 @@
                 <ul id="ul_organizacion">
                     <li id="li_nombre">
                         <label for="nombre">Nombre:</label>
-                        <input id="nombre" name="nombre" maxlength="200" />
+                        <input id="nombre" name="nombre" maxlength="200" value="{{ datos.get('nombre','')}}"/>
                         <small id="contador_nombre">200 caracteres restantes</small>
                     </li>
                     <li id="li_email">
                         <label for="email">E-mail:</label>
-                        <input id="email" name="email" type="email" maxlength="100" />
+                        <input id="email" name="email" type="email" maxlength="100" value="{{ datos.get('email','')}}"/>
                         <small id="contador_email">100 caracteres restantes</small>
                     </li>
                     <li id="li_celu">
                         <label for="telefono">Teléfono:</label>
-                        <input id="tel" name="celular" type="tel" maxlength="12" placeholder="+56986988191" />
+                        <input id="tel" name="celular" type="tel" maxlength="12" placeholder="+56986988191" value = "{{ datos.get('celular','')}}"/>
                         <small id="contador_celu">12 caracteres restantes</small>
                     </li>
                     <li class="inline-flex">
@@ -209,15 +220,15 @@
                 <ul id="ul_tema">
                     <li>
                         <label for="inicio">Día/Hora/Inicio:</label>
-                        <input id="inicio" name="dia_hora_inicio" type="datetime-local" />
+                        <input id="inicio" name="dia_hora_inicio" type="datetime-local" value="{{ datos.get('dia_hora_inicio','')}}"/>
                     </li>
                     <li id="li_fecha">
                         <label for="final">Día/Hora/Término:</label>
-                        <input id="final" name="dia_hora_termino" type="datetime-local" />
+                        <input id="final" name="dia_hora_termino" type="datetime-local" value="{{ datos.get('dia_hora_termino','')}}"/>
                     </li>
                     <li>
                         <label for="desc">Descripción:</label>
-                        <textarea id="desc" name="descripcion" placeholder="Ingresa tu descripción del evento" cols="50" rows="10"></textarea>
+                        <textarea id="desc" name="descripcion" placeholder="Ingresa tu descripción del evento" cols="50" rows="10">{{ datos.get('descripcion','')}}</textarea>
                     </li>
                     <li id = "li_tema" style="display: inline; margin-right: 1rem;">
                         <label for="tema">Tema del evento:</label>
