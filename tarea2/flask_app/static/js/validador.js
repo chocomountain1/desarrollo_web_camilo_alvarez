@@ -18,6 +18,8 @@ input_rss.maxLength = "50";
 input_rss.minLength = "4";
 input_rss.placeholder = "Escribe tu nombre de usuario o la url de tu perfil ";
 input_rss.style.width = "300px";
+input_rss.style.marginLeft = "166px"
+input_rss.style.padding = "0.3rem"
 const list = document.createElement("li");
 list.style.display = "block"
 let boton_contacto = document.getElementById("boton_contacto");
@@ -174,6 +176,9 @@ function mostrarComunas() {
 
 function mostrar_input_rss(){
     if(select_rss.value != ""){
+        boton_contacto.addEventListener("click",function(){
+            mostrar_otro_contacto()
+        }, {once:true});
         const clon_input = input_rss.cloneNode(true);
         list.appendChild(clon_input);
         ul.appendChild(list)
@@ -400,7 +405,6 @@ function validar_telefono() {
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
 select_tema.addEventListener("change",mostrar_input_tema_otro);
-boton_contacto.addEventListener("click",mostrar_otro_contacto);
 boton_foto.addEventListener("click",mostrar_input_foto);
 boton_tema.addEventListener("click",mostrar_input_tema);
 input_sector.addEventListener('input', function(){
