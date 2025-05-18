@@ -279,6 +279,9 @@ function mostrar_input_tema(){
     }
 }
 
+inicio = document.getElementById("inicio")
+final = document.getElementById("final")
+
 
 function mostrar_modal(){
     modal.style.display = "block"; //mostramos el modal
@@ -417,12 +420,58 @@ function validar_temas(){
             msg.style.color = "red";
             msg.style.marginTop = "1px";
             document.getElementById("ul_tema").appendChild(msg);
-        return false
         }
+        return false
     }
     else{
         if (existingError) {
             document.getElementById("ul_tema").removeChild(existingError);
+        }
+        return true
+    }
+}
+
+function validar_foto(){
+    const existingError = document.getElementById("ul_foto").querySelector("p");
+    if(document.getElementById("foto").value == ""){ 
+        if(!existingError){
+        const msg = document.createElement("p");
+            msg.textContent = "Almenos una foto debe ser elegida";
+            msg.style.color = "red";
+            msg.style.marginTop = "1px";
+            document.getElementById("ul_foto").appendChild(msg);
+        }
+        return false
+    }
+    else{
+        if (existingError) {
+            document.getElementById("ul_foto").removeChild(existingError);
+        }
+        return true
+    }
+}
+
+function validar_fecha(){
+    const inicio = document.getElementById("inicio")
+    const termino = document.getElementById("termino")
+
+    const inicio_fecha=new Date(inicio.value)
+    const termino_fecha=new Date(final.value)
+    
+    const existingError = document.getElementById("li_fecha").querySelector("p");
+    if(termino_fecha <= inicio_fecha){ 
+        if(!existingError){
+        const msg = document.createElement("p");
+            msg.textContent = "¡La fecha de término no puede ser antes que la de inicio!";
+            msg.style.color = "red";
+            msg.style.marginTop = "1px";
+            document.getElementById("li_fecha").appendChild(msg);
+        }
+        return false
+    }
+    else{
+        if (existingError) {
+            document.getElementById("li_fecha").removeChild(existingError);
         }
         return true
     }
@@ -447,6 +496,14 @@ input_cel.addEventListener("input",function(){
     actualizarContador(this,contador_celu)
 })
 
+
+inicio.addEventListener("change", function () {
+        const startDate = new Date(inicio.value);
+
+        const endDate = new Date(startDate.getTime() + 0.3 * 60 * 1000 -60 * 60 * 1000); // 
+        final.value = endDate.toISOString().slice(0, 16); // formato "yyyy-MM-ddTHH:mm"
+    });
+
 //El botón que permite agregar la actividad debería hacer catch de las validaciones de los campos ingresados
 boton_submit.addEventListener("click",validar_region);
 boton_submit.addEventListener("click",validar_comuna);
@@ -454,6 +511,8 @@ boton_submit.addEventListener("click",validar_nombre);
 boton_submit.addEventListener("click",validar_email);
 boton_submit.addEventListener("click",validar_telefono);
 boton_submit.addEventListener("click",validar_temas)
+boton_submit.addEventListener("click",validar_foto)
+boton_submit.addEventListener("click",validar_fecha)
 
 boton_submit.addEventListener("click",function(event){
     const regionValid = validar_region();
@@ -461,7 +520,10 @@ boton_submit.addEventListener("click",function(event){
     const nombreValid = validar_nombre();
     const emailValid = validar_email();
     const telefonoValid = validar_telefono();
-    if(regionValid && comunaValid && nombreValid && emailValid && telefonoValid){
+    const temasValid = validar_temas();
+    const fotoValid = validar_foto();
+    const fechaValid = validar_fecha();
+    if(regionValid && comunaValid && nombreValid && emailValid && telefonoValid && temasValid && fotoValid && fechaValid){
         mostrar_modal();
     }
     else{
