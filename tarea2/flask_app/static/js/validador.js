@@ -22,6 +22,11 @@ const list = document.createElement("li");
 list.style.display = "block"
 let boton_contacto = document.getElementById("boton_contacto");
 const select_contacto = select_rss.cloneNode(true)
+select_contacto.nombre = "tema";
+select_contacto.style.display = "flex"
+select_contacto.style.justifyContent = "center"
+select_contacto.style.marginLeft = "166px"
+select_contacto.style.marginTop = "0.3%"
 
 //lógica para tema
 const input_tema_otro = document.createElement("input");
@@ -31,7 +36,8 @@ const input_tema = select_tema.cloneNode(true);
 input_tema.nombre = "tema";
 input_tema.style.display = "flex"
 input_tema.style.justifyContent = "center"
-input_tema.style.marginLeft = "100px"
+input_tema.style.marginLeft = "154px"
+input_tema.style.marginTop = "0.1%"
 input_tema_otro.placeholder = "Agrega una descripción"
 const list_tema = document.createElement("li");
 let ul_tema = document.getElementById("ul_tema");
@@ -44,7 +50,9 @@ input_foto.name="foto" // esto para que el backend lo reconozca es necesario
 input_foto.type="file"
 input_foto.style.display = "flex"
 input_foto.style.justifyContent = "center"
-input_foto.style.marginLeft = "97px"
+input_foto.style.marginLeft = "154px"
+input_foto.style.marginTop = "0.9%"
+
 let boton_foto = document.getElementById("boton_foto");
 let ul_foto = document.getElementById("ul_foto");
 let list_foto = document.createElement("li")
@@ -63,8 +71,9 @@ let li_nombre = document.getElementById("li_nombre");
 
 const input_email = document.getElementById("email");
 const contador_nombre = document.getElementById("contador_nombre");
-
+const contador_email = document.getElementById("contador_email")
 const input_cel = document.getElementById("tel")
+const contador_celu = document.getElementById("contador_celu")
 
 //Creamos una estructura de datos que tenga como clave el nombre de una región y que esté asociado a un array con los
 //nombres de las comunas de la region
@@ -191,7 +200,7 @@ function mostrar_otro_contacto(){
         msg.textContent = "¡El máximo de contactos soportados es de 5!"
         msg.style.color = "red"
         msg.style.marginTop = "4px"
-        msg.style.marginLeft = "92px"
+        msg.style.marginLeft = "154px"
         ul.appendChild(msg)
         i +=1
     }else{
@@ -226,7 +235,7 @@ function mostrar_input_foto(){
         msg.textContent = "¡El máximo de fotos soportadas es de 5!"
         msg.style.color = "red"
         msg.style.marginTop = "4px"
-        msg.style.marginLeft = "92px"
+        msg.style.marginLeft = "154px"
         ul_foto.appendChild(msg)
         j +=1
     }else{
@@ -251,7 +260,7 @@ function mostrar_input_tema(){
         msg.textContent = "¡El máximo de temas es de 5!"
         msg.style.color = "red"
         msg.style.marginTop = "4px"
-        msg.style.marginLeft = "92px"
+        msg.style.marginLeft = "154px"
         ul_tema.appendChild(msg)
         k +=1
     }else{
@@ -276,8 +285,6 @@ function actualizarContador(input,contador) {
     const actual = input.value.length;
     contador.textContent = `${max - actual} caracteres restantes`;
   }
-
-
 
 function validar_region() {
     //Quiere decir que está no seleccionado
@@ -369,7 +376,7 @@ function validar_email() {
 
 function validar_telefono() {
     //Quiere decir que no cumple el formato pedido
-    exreg = /^\+\d{3}\s?\d{6}$/;
+    exreg = /^\+\d{3}\d{8}$/; //er pide que sea un + seguido de 3 numeros verificadores + 8 numeros
     if (!exreg.test(input_cel.value)) {
         let existingError = li_celu.querySelector("p");
         if (!existingError) {
@@ -401,6 +408,12 @@ input_sector.addEventListener('input', function(){
 });
 input_nombre.addEventListener("input",function(){
     actualizarContador(this,contador_nombre)
+})
+input_email.addEventListener("input",function(){
+    actualizarContador(this,contador_email)
+})
+input_cel.addEventListener("input",function(){
+    actualizarContador(this,contador_celu)
 })
 
 //El botón que permite agregar la actividad debería hacer catch de las validaciones de los campos ingresados
