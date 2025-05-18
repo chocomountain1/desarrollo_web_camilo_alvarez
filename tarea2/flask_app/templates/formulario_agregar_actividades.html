@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Formulario agregar actividad</title>
     <style>
         .section-container {
@@ -194,7 +194,7 @@
                         <small id="contador_email">100 caracteres restantes</small>
                     </li>
                     <li id="li_celu">
-                        <label for="telefono">Teléfono:</label>
+                        <label for="tel">Teléfono:</label>
                         <input id="tel" name="celular" type="tel" maxlength="12" placeholder="+56986988191" value = "{{ datos.get('celular','')}}"/>
                         <small id="contador_celu">12 caracteres restantes</small>
                     </li>
@@ -273,9 +273,7 @@
 
             <div id="modal">
                 <p>¿Está seguro de que quiere agregar esta actividad?</p>
-                <a href="{{url_for('saved_msg')}}">
                     <button class="boton_portada" type="submit">Sí, estoy seguro</button>
-                </a>
                 <button id="boton_no" type="button">No, no estoy seguro, quiero volver al formulario</button>
             </div>
         </form>

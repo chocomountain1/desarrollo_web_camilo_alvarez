@@ -1,10 +1,33 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+    <style>.contenedor_boton {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .boton_portada {
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .boton_portada:hover {
+            background-color: #0056b3;
+        }</style>
     <div>
     <h1 style="justify-content: center; display: flex;">Hemos recibido su información, muchas gracias y suerte en su actividad</h1>
     </div>
     <div style="display: flex; justify-content: center; margin-top: 20%;">
         <a href="{{url_for('home')}}">
-            <button type="button" style="padding: 10%;">Volver a la portada</button>
+            <button class="contenedor_boton" type="button" style="padding: 10%;">Volver a la portada</button>
         </a>   
     </div>
 </html>
