@@ -144,6 +144,7 @@ function mostrarComunas() {
     if(region_comuna.regiones.some(r => r.nombre == region)){ //dic si posee la región seleccionada
         const no_seleccionado = document.createElement("option") //Necesitamos que esté esta opción cada vez que se actualiza la región seleccionada
         no_seleccionado.textContent = "No seleccionada"
+        no_seleccionado.value = ""
         select_comuna.appendChild(no_seleccionado)
         const dic_region = region_comuna.regiones.find(r => r.nombre == region)
         let array_comunas = dic_region?.comunas
@@ -280,7 +281,7 @@ function actualizarContador(input,contador) {
 
 function validar_region() {
     //Quiere decir que está no seleccionado
-    if (select_region.value == "") {
+    if (document.getElementById("li_region").querySelector("select").value == ""){
         let existingError = li_region.querySelector("p");
         if (!existingError) {
             const msg_comuna = document.createElement("p");
@@ -324,7 +325,7 @@ function validar_nombre() {
 
 function validar_comuna() {
     //Quiere decir que está no seleccionado
-    if (select_comuna.value == "") {
+    if (document.getElementById("li_comuna").querySelector("select").value == ""){
         let existingError = li_comuna.querySelector("p");
         if (!existingError) {
             const msg_comuna = document.createElement("p");
