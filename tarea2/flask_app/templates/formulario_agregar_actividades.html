@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <title>Formulario agregar actividad</title>
     <style>
+        .section-container {
+            background-color: #faf8f4; /* un fondo muy suave */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4ecd8; /* Sepia */
@@ -119,6 +128,7 @@
 <body>
     <div id="form-container">
         <form id="form" name="form" method="post" action="{{url_for('add_activity')}}" enctype="multipart/form-data">
+            <div class="section-container">
             <h1>¿Dónde?</h1>
             <div class="centered">
                 <ul>
@@ -157,7 +167,8 @@
                     </li>
                 </ul>
             </div>
-
+            </div>
+            <div class="section-container">
             <h1>¿Quién organiza?</h1>
             <div class="centered">
                 <ul id="ul_organizacion">
@@ -191,7 +202,8 @@
                     </li>
                 </ul>
             </div>
-
+            </div>
+            <div class="section-container">
             <h1>¿Cuándo y de qué trata?</h1>
             <div class="centered">
                 <ul id="ul_tema">
@@ -207,7 +219,7 @@
                         <label for="desc">Descripción:</label>
                         <textarea id="desc" name="descripcion" placeholder="Ingresa tu descripción del evento" cols="50" rows="10"></textarea>
                     </li>
-                    <li style="display: inline; margin-right: 1rem;">
+                    <li id = "li_tema" style="display: inline; margin-right: 1rem;">
                         <label for="tema">Tema del evento:</label>
                         <select id="tema" name="tema">
                             <option value="">Sin seleccionar</option>
@@ -228,7 +240,6 @@
                     </li>
                 </ul>
             </div>
-
             <div class="centered">
                 <ul id="ul_foto">
                     <li style="display: inline; margin-right: 1rem;">
@@ -240,7 +251,7 @@
                     </li>
                 </ul>
             </div>
-
+            </div>
             <div class="centered">
                 <ul>
                     <li>

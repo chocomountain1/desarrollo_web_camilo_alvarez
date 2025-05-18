@@ -10,7 +10,6 @@ let select_region = document.getElementById("region");
 
 //Lógica para rss
 let select_rss = document.getElementById("rss");
-select_rss.name ="contacto"
 let ul = document.getElementById("ul_organizacion")
 const input_rss = document.createElement("input");
 input_rss.name="rss"
@@ -215,10 +214,15 @@ function mostrar_otro_contacto(){
 
 function mostrar_input_tema_otro(){
     if(select_tema.value == "otro"){
+        while (list_tema.firstChild) {
+        list_tema.removeChild(list_tema.lastChild);
+        }
         list_tema.appendChild(input_tema_otro);
         ul_tema.appendChild(list_tema)
+        input_tema_otro.style.width = "300px";
+        input_tema_otro.style.marginLeft = "156px"
+        input_tema_otro.style.padding = "0.3rem"
     } else{
-
     }
 }
 
@@ -250,15 +254,17 @@ function mostrar_input_foto(){
 
 k=0
 function mostrar_input_tema(){
-    if(k==0){
+    if(k==0 & !Array.from(document.getElementById("ul_tema").querySelectorAll("select#tema")).some(e=> e.value=="" || e.value == "otro")){
         list_tema.appendChild(input_tema);
         ul_tema.appendChild(list_tema)
+        input_tema.remove(input_tema.options.length - 1);
         k+=1
     }
-    else if(k>0 & k<=3){
+    else if(k>0 & k<=3 & !Array.from(document.getElementById("ul_tema").querySelectorAll("select#tema")).some(e=> e.value=="" || e.value == "otro")){
         const input_clon = input_tema.cloneNode(true);
         list_tema.appendChild(input_clon);
         ul_tema.appendChild(list_tema)
+        input_clon.remove(input_clon.options.length - 1);
         k +=1
     }else if (k==4){
         msg = document.createElement("p")
@@ -401,6 +407,27 @@ function validar_telefono() {
         return true
     }
 }
+
+function validar_temas(){
+    const existingError = document.getElementById("ul_tema").querySelector("p");
+    if(Array.from(document.getElementById("ul_tema").querySelectorAll("select#tema")).some(e => e.value == "")){ //tomamos todos los select de ul_tema y evaluamos si alguno esta vacío (en cualquier caso ninguno debería estar vacío)
+        if(!existingError){
+        const msg = document.createElement("p");
+            msg.textContent = "Este campo es requerido y deben estar todos los temas seleccionados";
+            msg.style.color = "red";
+            msg.style.marginTop = "1px";
+            document.getElementById("ul_tema").appendChild(msg);
+        return false
+        }
+    }
+    else{
+        if (existingError) {
+            document.getElementById("ul_tema").removeChild(existingError);
+        }
+        return true
+    }
+
+}
 //Definimos los eventos asociados a los elementos del formulario
 select_region.addEventListener("change",mostrarComunas);
 select_rss.addEventListener("change",mostrar_input_rss);
@@ -426,6 +453,7 @@ boton_submit.addEventListener("click",validar_comuna);
 boton_submit.addEventListener("click",validar_nombre);
 boton_submit.addEventListener("click",validar_email);
 boton_submit.addEventListener("click",validar_telefono);
+boton_submit.addEventListener("click",validar_temas)
 
 boton_submit.addEventListener("click",function(event){
     const regionValid = validar_region();
