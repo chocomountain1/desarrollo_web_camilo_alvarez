@@ -6,15 +6,17 @@
 </head>
 <body>
     <h1>Estadísticas sobre las actividades</h1>
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <img style="margin-left: 8%;" src="grafico_lineas.png" alt="Gráfico de líneas">
-        <img style="margin-left: 10%;" src="grafico_de_torta.png" alt="Gráfico de torta">
-        <img style="margin-left: 9%;" src="grafico_de_barras.png" alt="Gráfico de barras">
-    </div>
+    <div id="1graph" style="width: 600px;height: 300px;"></div> <!-- first graph-->
+    <div id="2graph" style="width: 600px;height: 300px;"></div> <!-- second graph-->
+    <div id="3graph" style="width: 600px;height: 300px;"></div> <!-- third graph-->
+
     <div style="display: flex; justify-content: center; margin-top: 10%;">
         <form action="{{url_for('home')}}">
             <button class="boton_portada" type="submit">Volver a la portada</button>
         </form>
     </div>
 </body>
+<script src ="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"></script> <!--jQuery-->
+<script src = "{{url_for('static', filename='libs/flot/jquery.flot.js') }}"></script> <!--flot-->
+<script src="{{ url_for('static', filename='js/estadistica.js')}}"></script>">
 </html>
