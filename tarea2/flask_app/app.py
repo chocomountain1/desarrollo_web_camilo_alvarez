@@ -208,8 +208,15 @@ def saved_msg():
 @app.route('/chart_data')
 def chart_data():
     conteo_por_dia = (
-        db.SessionLocal.query(
+        session.query(
             func.date(db.Actividad.dia_hora_inicio).label('dia'),func.count().label('cantidad')
         ).group_by(func.date(db.Actividad.dia_hora_inicio)).all()
     )
-    return jsonify({"status": "ok", "data": conteo_por_dia})
+    if len(conteo_por_dia)> 0:
+        dias, cantidad = zip(*conteo_por_dia)
+        return jsonify({"status": "ok", "dias": dias, "cantidad": cantidad}), 200
+    else:
+        status = "No hay ninguna actividad agregada aún"
+        flash("Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario")
+        redirect(url_for('statistics'))
+        return jsonify({"status": status}), 400
