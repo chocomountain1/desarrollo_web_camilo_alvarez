@@ -1,10 +1,10 @@
-from flask import Flask, request, render_template, redirect,url_for, session as flask_session, flash
+from flask import Flask, request, render_template, redirect,url_for, session as flask_session, flash, jsonify
 from utils.validations import validate_add_activity
 from database import db
 from werkzeug.utils import secure_filename
 import filetype
 import os
-from sqlalchemy import text
+from sqlalchemy import text, extract, func
 from utils.validations import validar_archivo, validar_celular, validar_comuna, validar_email,validar_fotos,validar_nombre,validar_region,validar_tema
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -204,3 +204,12 @@ def statistics():
 @app.route('/saved_msg',methods=["GET","POST"])
 def saved_msg():
     return render_template('mensaje_guardado.html')
+
+@app.route('/chart_data')
+def chart_data():
+    conteo_por_dia = (
+        db.SessionLocal.query(
+            func.date(db.Actividad.dia_hora_inicio).label('dia'),func.count().label('cantidad')
+        ).group_by(func.date(db.Actividad.dia_hora_inicio)).all()
+    )
+    return jsonify({"status": "ok", "data": conteo_por_dia})
