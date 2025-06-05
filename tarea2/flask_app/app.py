@@ -213,8 +213,11 @@ def chart_data():
         ).group_by(func.date(db.Actividad.dia_hora_inicio)).all()
     )
     if len(conteo_por_dia)> 0:
+        print("hola, pasé por aca")
         dias, cantidad = zip(*conteo_por_dia)
-        return jsonify({"status": "ok", "dias": dias, "cantidad": cantidad}), 200
+        dias_str = [f"{d.year}/{d.month}/{d.day}" for d in dias]
+        print(dias_str,cantidad)
+        return jsonify({"status": "ok", "dias": dias_str, "cantidad": cantidad}), 200
     else:
         status = "No hay ninguna actividad agregada aún"
         flash("Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario")

@@ -128,7 +128,7 @@
 <body>
     <div id="form-container">
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
+            {% if messages and "Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario" not in messages %}
             <ul class="flash-messages">
                 {% for message in messages %}
                     <li>
