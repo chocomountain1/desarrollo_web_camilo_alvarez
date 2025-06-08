@@ -8,12 +8,30 @@ function first_graph(){
         }
         return response.json(); //Necesitamos parsear a json
     })
-    .then(data => {
-        console.log("hola pase por aca siii")
-        console.log("que",data.dias,data.cantidad)
-        $.plot($("#1graph"),[ [list(data.dias),list(data.cantidad)] ])
+    .then(raw_data => {
+        data = [] // la dejamos como una lista vacía
+        raw_data.dias.forEach((element,i) => {
+            data.push(([element, raw_data.cantidad[i]]))
+        }); //poblamos data 
+        console.log("data",data)
+        $.plot($("#1graph"),[data],{
+            xaxis:{
+                mode:"categories",
+                tickLength: 0
+            },
+            yaxis:{
+                tickSize:1
+            },
+            grid:{
+                margin: {
+                    bottom: 50,
+                    right: 50
+                }
+            }
+        })
     })
     .catch(error => console.error('Error:', error.status))
 }
 
-first_graph() //ploteamos
+first_graph() //ploteamos el primer grafico
+
