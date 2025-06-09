@@ -221,3 +221,20 @@ def chart_data():
         flash("Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario")
         redirect(url_for('statistics'))
         return jsonify({"status": status}), 400
+    
+@app.route('/chart_data2')
+def chart_data2():
+    conteo_por_tema = (
+        session.query(
+            db.ActividadTema.tema.label('tema'),func.count().label('cantidad')
+        ).group_by(db.ActividadTema.tema).all()
+    )
+    if len(conteo_por_tema)> 0:
+        tema, cantidad = zip(*conteo_por_tema)
+        tema = [temas.value for temas in tema]
+        return jsonify({"status": "ok", "tema": tema, "cantidad": cantidad}), 200
+    else:
+        status = "No hay ninguna actividad agregada aún"
+        flash("Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario")
+        redirect(url_for('statistics'))
+        return jsonify({"status": status}), 400
