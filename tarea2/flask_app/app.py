@@ -4,8 +4,9 @@ from database import db
 from werkzeug.utils import secure_filename
 import filetype
 import os
-from sqlalchemy import text, extract, func
+from sqlalchemy import text, extract, func, case
 from utils.validations import validar_archivo, validar_celular, validar_comuna, validar_email,validar_fotos,validar_nombre,validar_region,validar_tema
+import calendar
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -233,6 +234,42 @@ def chart_data2():
         tema, cantidad = zip(*conteo_por_tema)
         tema = [temas.value for temas in tema]
         return jsonify({"status": "ok", "tema": tema, "cantidad": cantidad}), 200
+    else:
+        status = "No hay ninguna actividad agregada aún"
+        flash("Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario")
+        redirect(url_for('statistics'))
+        return jsonify({"status": status}), 400
+
+@app.route('/chart_data3')
+def chart_data3():
+    franja_horaria = case(
+        (extract('hour', db.Actividad.dia_hora_inicio) < 12, 'mañana'),
+        (extract('hour', db.Actividad.dia_hora_inicio) < 18, 'tarde'),
+    else_='noche'
+    )
+
+    consulta = (
+        session.query(
+            extract('month', db.Actividad.dia_hora_inicio).label('mes'),
+            franja_horaria.label('franja'),
+            func.count().label('cantidad')
+        )
+        .group_by('mes', 'franja')
+        .order_by('mes', 'franja')
+        .all()
+    )
+    if len(consulta)> 0:
+        result = []
+        for c in consulta:
+            nombre_mes = calendar.month_name[c[0]]
+            result.append([nombre_mes, c[1],c[2]])
+        
+        meses, horario, cantidad = zip(*result)
+        
+        print(result)
+        print(meses)
+        return jsonify({"status": "ok", "meses": meses, "horario": horario, "cantidad": cantidad}), 200
+    
     else:
         status = "No hay ninguna actividad agregada aún"
         flash("Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario")
