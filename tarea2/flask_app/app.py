@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import filetype
 import os
 from sqlalchemy import text, extract, func, case
-from utils.validations import validar_archivo, validar_celular, validar_comuna, validar_email,validar_fotos,validar_nombre,validar_region,validar_tema
+from utils.validations import validar_archivo, validar_celular, validar_comuna, validar_email,validar_fotos,validar_nombre,validar_region,validar_tema, validar_nombre_comentario,validar_texto_comentario
 import calendar
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -280,5 +280,14 @@ def chart_data3():
 def add_comment():
     if request.method == "POST":
         nombre = request.form['comentario_nombre']
-        texto = request.form['texto_comentario']
-        
+        texto = request.form['comentario_texto']
+        print("pase por aca")
+    #Validamos los campos a los que accedimos antes de postearlos
+        if validar_nombre_comentario(nombre)[1] and validar_texto_comentario(texto)[1]:
+            #Solo si pasa esto queremos agregar a la base de datos
+            print("por aca igual")
+            db.register_comment(nombre, texto)
+            return jsonify({"nombre": nombre, "texto": texto})
+        else:
+            #Si no, alertamos al usuario a través del js de la modal
+            return jsonify({"data": [validar_nombre_comentario(nombre),validar_texto_comentario(texto)]})

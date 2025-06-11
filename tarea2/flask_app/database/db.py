@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, text
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from datetime import datetime
 import enum
 
 DB_NAME = "tarea2"
@@ -75,7 +76,7 @@ class Actividad(Base):
     temas = relationship("ActividadTema", back_populates="actividad", cascade="all, delete-orphan")
     contactos = relationship("ContactarPor", back_populates="actividad", cascade="all, delete-orphan")
     fotos = relationship("Foto", back_populates="actividad", cascade="all, delete-orphan")
-
+    comentarios = relationship("Comentario", back_populates="actividad", cascade="all, delete-orphan")
 
 class ActividadTema(Base):
     __tablename__ = 'actividad_tema'
@@ -109,6 +110,17 @@ class Foto(Base):
 
     actividad = relationship("Actividad", back_populates="fotos")
 
+class Comentario(Base):
+    __tablename__ = 'comentario'
+    __table_args__ = {'schema': 'tarea2'}
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, nullable=False)
+    actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
+
+    actividad = relationship("Actividad", back_populates="comentarios")
 # ---Database Functions--- #
 
 def create_activity(nombre,email,celular,sector,dia_hora_inicio,dia_hora_termino,descripcion,comuna_id):
@@ -147,3 +159,18 @@ def create_photo(nombres_archivos,rutas_archivos):
 def register_photo(nombres_archivos, rutas_archivos):
     create_photo(nombres_archivos=nombres_archivos, rutas_archivos=rutas_archivos)
     return True,""
+
+def create_comment(nombre_comentario, texto_comentario):
+    session = SessionLocal()
+    nuevo_comentario = Comentario(
+        nombre = nombre_comentario,
+        texto = texto_comentario,
+        fecha = datetime.now(),
+        actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar()
+    )
+    session.add(nuevo_comentario)
+    session.commit()
+    session.close()
+
+def register_comment(nombre_comentario, texto_comentario):
+    return create_comment(nombre_comentario,texto_comentario)

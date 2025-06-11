@@ -71,3 +71,4 @@ def validar_texto_comentario(comentario):
         return["El texto debe tener largo mínimo 5 caractéres!", False]
     else:
         return["ok", True]
+    

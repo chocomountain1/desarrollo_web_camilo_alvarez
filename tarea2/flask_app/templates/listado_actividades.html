@@ -270,20 +270,20 @@
         <div id="div_comentarios"> <!--Este debe ser gestionado por fetch a través de js-->
             <p>Agregar un comentario</p>
             <div id="div_form_comentario" style="display: block;">
-                <form>
+                <form method="post" action="{{url_for('add_comment')}}" enctype="multipart/form-data">
                     <ul>
                         <li>
                             <label>Nombre</label>
                             <input name="comentario_nombre">
                         </li>
                         <li>
-                            <textarea>Comentario</textarea>
+                            <textarea name="comentario_texto">Comentario</textarea>
                         </li>
                     </ul>
+                <a href = "{{url_for('add_comment')}}">
+                    <button>Agregar comentario</button>
+                </a>
                 </form>
-            </div>
-            <div>
-                <button>Agregar comentario</button>
             </div>
         </div>
         <div id="lista_de_comentarios">
