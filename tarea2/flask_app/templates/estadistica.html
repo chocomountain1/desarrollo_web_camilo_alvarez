@@ -21,14 +21,15 @@
                 {% for message in messages %}
                 <p style="font-size: large;">{{message}}</p>
                 {% endfor %}
+            {% else %}
+            <h2>Gráfico de cantidad de actividades agregadas por día</h2>
+                <div id="1graph" style="width: 600px;height: 300px;"></div> <!-- first graph-->
+            <h2>Gráfico de actividades agregadas por tipo</h2>
+                <div id="2graph" style="width: 600px;height: 300px;"></div> <!-- second graph-->
+            <h2>Gráfico de actividades agregadas por horario</h2>
+                <div id="3graph" style="width: 600px;height: 300px;"></div> <!-- third graph-->
             {% endif %}
     {% endwith %}
-    <h2>Gráfico de cantidad de actividades agregadas por día</h2>
-    <div id="1graph" style="width: 600px;height: 300px;"></div> <!-- first graph-->
-    <h2>Gráfico de actividades agregadas por tipo</h2>
-    <div id="2graph" style="width: 600px;height: 300px;"></div> <!-- second graph-->
-    <h2>Gráfico de actividades agregadas por horario</h2>
-    <div id="3graph" style="width: 600px;height: 300px;"></div> <!-- third graph-->
 
     <div style="display: flex; justify-content: center; margin-top: 10%;">
         <form action="{{url_for('home')}}">

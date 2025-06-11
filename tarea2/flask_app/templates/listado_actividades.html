@@ -267,6 +267,28 @@
         <p id="tema"></p>
         <p id="nombre"></p>
         <div id="div_imagenes"></div>
+        <div id="div_comentarios"> <!--Este debe ser gestionado por fetch a través de js-->
+            <p>Agregar un comentario</p>
+            <div id="div_form_comentario" style="display: block;">
+                <form>
+                    <ul>
+                        <li>
+                            <label>Nombre</label>
+                            <input name="comentario_nombre">
+                        </li>
+                        <li>
+                            <textarea>Comentario</textarea>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div>
+                <button>Agregar comentario</button>
+            </div>
+        </div>
+        <div id="lista_de_comentarios">
+
+        </div>
         <div class="contenedor_boton">
             <a href="{{url_for('home')}}">
                 <button class="boton_portada" type="button">Quiero volver a la portada</button>

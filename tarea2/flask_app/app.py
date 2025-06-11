@@ -275,3 +275,10 @@ def chart_data3():
         flash("Aún no hay ninguna actividad para las estadísticas, agrega alguna accediendo al formulario")
         redirect(url_for('statistics'))
         return jsonify({"status": status}), 400
+
+@app.route('/comments', methods=["GET","POST"])
+def add_comment():
+    if request.method == "POST":
+        nombre = request.form['comentario_nombre']
+        texto = request.form['texto_comentario']
+        

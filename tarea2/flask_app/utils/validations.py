@@ -55,3 +55,19 @@ def validar_fotos(fotos):
             return False
     else:
         return True
+
+def validar_nombre_comentario(nombre_comentario): 
+    if not nombre_comentario:
+        return ["El nombre de quien comentó no puede ser vacío!", False]
+    elif len(nombre_comentario) > 80 or len(nombre_comentario)<3:
+        return["El nombre de quien comentó debe tener largo mínimo 3 y máximo de 80 caractéres!", False]
+    else:
+        return ["ok",True]
+
+def validar_texto_comentario(comentario):
+    if not comentario:
+        return["El texto del comentario es obligatorio!",False]
+    elif len(comentario)<5:
+        return["El texto debe tener largo mínimo 5 caractéres!", False]
+    else:
+        return["ok", True]

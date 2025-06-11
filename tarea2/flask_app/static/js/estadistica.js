@@ -71,7 +71,7 @@ function second_graph(){
     })
     .catch(error => console.error('Error:', error.status))
 }
-second_graph()
+second_graph() //ploteamos el segundo grafico
 
 function third_graph(){
     fetch('/chart_data3') //llamamos al backend para cargar los datos
@@ -146,4 +146,4 @@ function third_graph(){
     .catch(error => console.error('Error:', error.status))
 }
 
-third_graph()
+third_graph() //ploteamos el tercer grafico
