@@ -281,12 +281,11 @@ def add_comment():
     if request.method == "POST":
         nombre = request.form['comentario_nombre']
         texto = request.form['comentario_texto']
-        print("pase por aca")
+        actividad_id = request.form['actividad_id'] #Esto lo obtenemos desde el html con jinja2, a través de un hidden input
     #Validamos los campos a los que accedimos antes de postearlos
         if validar_nombre_comentario(nombre)[1] and validar_texto_comentario(texto)[1]:
             #Solo si pasa esto queremos agregar a la base de datos
-            print("por aca igual")
-            db.register_comment(nombre, texto)
+            db.register_comment(nombre, texto, actividad_id)
             return jsonify({"nombre": nombre, "texto": texto})
         else:
             #Si no, alertamos al usuario a través del js de la modal

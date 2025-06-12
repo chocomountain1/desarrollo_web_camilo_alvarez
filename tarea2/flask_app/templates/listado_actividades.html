@@ -248,7 +248,6 @@
                         {% endfor %}
                     </td>
                 </tr>
-                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -280,9 +279,11 @@
                             <textarea name="comentario_texto">Comentario</textarea>
                         </li>
                     </ul>
+                <input type="hidden" name="actividad_id" value="{{ actividad.id }}"> <!--Aquí pasamos como argumento también la actividad-->
                 <a href = "{{url_for('add_comment')}}">
                     <button>Agregar comentario</button>
                 </a>
+                {% endfor %}
                 </form>
             </div>
         </div>

@@ -160,17 +160,17 @@ def register_photo(nombres_archivos, rutas_archivos):
     create_photo(nombres_archivos=nombres_archivos, rutas_archivos=rutas_archivos)
     return True,""
 
-def create_comment(nombre_comentario, texto_comentario):
+def create_comment(nombre_comentario, texto_comentario, actividad_id):
     session = SessionLocal()
     nuevo_comentario = Comentario(
         nombre = nombre_comentario,
         texto = texto_comentario,
         fecha = datetime.now(),
-        actividad_id = session.execute(text("SELECT COUNT(*) FROM actividad")).scalar()
+        actividad_id = actividad_id
     )
     session.add(nuevo_comentario)
     session.commit()
     session.close()
 
-def register_comment(nombre_comentario, texto_comentario):
-    return create_comment(nombre_comentario,texto_comentario)
+def register_comment(nombre_comentario, texto_comentario, actividad_id):
+    return create_comment(nombre_comentario,texto_comentario, actividad_id)
