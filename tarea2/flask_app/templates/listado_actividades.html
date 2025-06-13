@@ -266,10 +266,10 @@
         <p id="tema"></p>
         <p id="nombre"></p>
         <div id="div_imagenes"></div>
-        <div id="div_comentarios"> <!--Este debe ser gestionado por fetch a través de js-->
+        <div id="div_comentarios"> 
             <p>Agregar un comentario</p>
             <div id="div_form_comentario" style="display: block;">
-                <form method="post" action="{{url_for('add_comment')}}" enctype="multipart/form-data">
+                <form method="post" action="{{url_for('add_comment')}}" enctype="multipart/form-data" id="form_comentario">
                     <ul>
                         <li>
                             <label>Nombre</label>
@@ -281,15 +281,16 @@
                     </ul>
                 <input type="hidden" name="actividad_id" value="{{ actividad.id }}"> <!--Aquí pasamos como argumento también la actividad-->
                 <a href = "{{url_for('add_comment')}}">
-                    <button>Agregar comentario</button>
+                    <button id= "boton_comentario_submit">Agregar comentario</button>
                 </a>
-                {% endfor %}
+
                 </form>
             </div>
         </div>
-        <div id="lista_de_comentarios">
-
+        <div> 
+            <ul id= "lista_de_comentarios_{{actividad.id}}"></ul> <!--Este debe ser gestionado por fetch a través de js-->
         </div>
+                {% endfor %}
         <div class="contenedor_boton">
             <a href="{{url_for('home')}}">
                 <button class="boton_portada" type="button">Quiero volver a la portada</button>
@@ -314,5 +315,6 @@
     {% endfor %}
 
 <script src="{{url_for('static', filename='js/modales.js')}}"></script>
+<script src="{{url_for('static',filename='js/comentarios.js')}}"></script>
 </body>
 </html>

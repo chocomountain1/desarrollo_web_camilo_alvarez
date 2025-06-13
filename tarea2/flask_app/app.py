@@ -284,9 +284,26 @@ def add_comment():
         actividad_id = request.form['actividad_id'] #Esto lo obtenemos desde el html con jinja2, a través de un hidden input
     #Validamos los campos a los que accedimos antes de postearlos
         if validar_nombre_comentario(nombre)[1] and validar_texto_comentario(texto)[1]:
+            print("paso por aca")
             #Solo si pasa esto queremos agregar a la base de datos
             db.register_comment(nombre, texto, actividad_id)
-            return jsonify({"nombre": nombre, "texto": texto})
+            ultimo_comentario = session.query(db.Comentario).order_by(db.Comentario.id.desc()).first()
+            fecha = ultimo_comentario.fecha
+            return jsonify({"nombre": nombre, "texto": texto, "id_actividad": actividad_id, "fecha": fecha}),200
         else:
             #Si no, alertamos al usuario a través del js de la modal
-            return jsonify({"data": [validar_nombre_comentario(nombre),validar_texto_comentario(texto)]})
+            print("pase como error")
+            return jsonify({"error": "Erooor"}),500
+    else: #Metodo GET para mostrar los comentarios que habian
+        comentarios = session.query(db.Comentario).all()
+        #Necesitamos mandar los datos por separado
+        nombres = []
+        textos = []
+        id_actividades = []
+        fechas = []
+        for c in comentarios:
+            nombres.append(c.nombre)
+            textos.append(c.texto)
+            id_actividades.append(c.actividad_id)
+            fechas.append(c.fecha)
+        return jsonify({"nombres": nombres, "textos": textos, "id_actividades": id_actividades, "fechas": fechas}),200
