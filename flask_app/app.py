@@ -287,13 +287,10 @@ def add_comment():
             print("paso por aca")
             #Solo si pasa esto queremos agregar a la base de datos
             db.register_comment(nombre, texto, actividad_id)
-            ultimo_comentario = session.query(db.Comentario).order_by(db.Comentario.id.desc()).first()
-            fecha = ultimo_comentario.fecha
-            return jsonify({"nombre": nombre, "texto": texto, "id_actividad": actividad_id, "fecha": fecha}),200
+            return redirect('/activity_list')
         else:
             #Si no, alertamos al usuario a través del js de la modal
-            print("pase como error")
-            return jsonify({"error": "Erooor"}),500
+            return jsonify({"error": "Error con el formulario, revisar el nombre y el texto del comentario", "nombre": nombre, "texto": texto}),500
     else: #Metodo GET para mostrar los comentarios que habian
         comentarios = session.query(db.Comentario).all()
         #Necesitamos mandar los datos por separado

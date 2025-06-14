@@ -17,3 +17,16 @@ En este documento se explicitarán algunas de las decisiones de la creación del
  4. Será posible también visualiarla en el apartado de lista de actividades, el cual de forma dinámica se va rellenando según la base de datos gracias a la acción de jinja2.
 
  -Por último cabe mencionar que ninguna de las implementaciones abordadas para los apartados del formulario, lista de actividades o la portada fue también hecha para las estadísticas, apartado el cual, será abordado en la tarea 3.
+
+ # desarrollo_web_camilo_alvarez Tarea 3
+
+ -Se utilizará flot 4.2.2 para la creación de gráficos a través de js. Para esto, se importaron desde github las librerias manualmente y de forma local, igualmente al estar en este repositorio se subirán junto los comandos git add .
+
+ -A pesar de que se tiene jquery en el caso de las promesas de AJAX para js se harán con fetch() debido a que es más moderno y recomendado que XMLHTTTPREQUEST() o JQuery.ajax().
+
+ -!IMPORTANTE! no pude descubrir por qué a la hora de generar los gráficos hay un comportamiento muy variable que tiene que ver tanto con flot como con sql alchemy, los cuales muestran en determinadas ocasiones los gráficos solicitados como se puede ver:
+
+![alt text](image.png) 
+![alt text](image-1.png)
+
+-!IMPORTANTE! tampoco pude generar los comentarios de forma dinámica desde js y usando AJAX :c no pude hacer que la función se trigeree de la forma que yo quería. sin embargo basta con hacer flask run para ver las actualizaciones, igual debería funcionar a modo de ejemplo lo que dejé en las bases de este proyecto.

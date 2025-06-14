@@ -8,15 +8,16 @@ let modal = document.getElementById("modal_listado")
 
 //Lógica para que las fotos sean responsivas
 let foto_list = document.querySelectorAll("img#foto")
-console.log(foto_list)
+
 let modal_foto_list = document.querySelectorAll("div#modal_foto")
-console.log(modal_foto_list)
+
 let boton_foto_list = document.querySelectorAll("button#boton_foto")
-console.log(boton_foto_list)
+
 
 //Creamos la función que muestra la modal
 
-function mostrar_modal(tr){
+function mostrar_modal(tr,i){
+    console.log(i)
     const celdas = tr.getElementsByTagName("td"); //Array de html elements del tipo td, a los cuales podemos acceder a sus campos
     document.getElementById("inicio").textContent = "Inicio: " + celdas[0].textContent;
     document.getElementById("termino").textContent = "Término: " + celdas[1].textContent;
@@ -36,10 +37,19 @@ function mostrar_modal(tr){
             document.getElementById("div_imagenes").appendChild(img)
         }
     }
-
+    const input_escondido = document.createElement('input');
+    input_escondido.type = "hidden";
+    input_escondido.name = "actividad_id";
+    input_escondido.value = i+1;
+    document.getElementById("form_comentario").appendChild(input_escondido)
     modal.style.display = "block"
     document.getElementById("div").style.display="none"
     document.getElementById("h1").style.display="none"
+    const lista_de_comentarios = document.createElement('ul')
+    lista_de_comentarios.id = `lista_de_comentarios_${i+1}`
+    document.getElementById("div_comentarios").appendChild(lista_de_comentarios)
+    console.log("creada la lista")
+    console.log(lista_de_comentarios)
 }
 
 //Creamos la función para poder agrandar la imagen
@@ -56,7 +66,7 @@ function volver_modal(i){
 //Creamos los eventos asociados a los elementos html
 for(let i =0; i< tr_list.length; i++){
     tr_list[i].addEventListener("click",function(){
-        mostrar_modal(this); //le mandamos una instancia de tr, por lo tanto, va a mandar a la función la información de la fila clickeada
+        mostrar_modal(this,i); //le mandamos una instancia de tr, por lo tanto, va a mandar a la función la información de la fila clickeada
     });
 }
 

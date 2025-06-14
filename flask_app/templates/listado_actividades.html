@@ -199,7 +199,28 @@
             height: auto;
         }
     }
+    .formulario_comentario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
 
+.formulario_comentario input[type="text"],
+.formulario_comentario textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formulario_comentario ul {
+    list-style: none;
+    padding: 0;
+}
+
+.formulario_comentario li {
+    margin-bottom: 15px;
+}
     </style>
 </head>
 <body>
@@ -248,15 +269,16 @@
                         {% endfor %}
                     </td>
                 </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
+    
     <div class="contenedor_boton" style="padding: 5%;">
             <a href="{{url_for('home')}}">
                 <button class="boton_portada" type="button">Quiero volver a la portada</button>
             </a>
         </div>
-
     <div id="modal_listado">
         <h1>Detalles de la actividad</h1>
         <p id="inicio"></p>
@@ -268,29 +290,26 @@
         <div id="div_imagenes"></div>
         <div id="div_comentarios"> 
             <p>Agregar un comentario</p>
-            <div id="div_form_comentario" style="display: block;">
-                <form method="post" action="{{url_for('add_comment')}}" enctype="multipart/form-data" id="form_comentario">
+            <div id="div_form_comentario" style="display: block;" class= "formulario_comentario">
+                <div id="error_comentario" style="color: red; margin-bottom: 10px;"></div>
+                <form method="post" enctype="multipart/form-data" id="form_comentario">
                     <ul>
                         <li>
                             <label>Nombre</label>
                             <input name="comentario_nombre">
                         </li>
                         <li>
-                            <textarea name="comentario_texto">Comentario</textarea>
+                            <label>Comentario</label>
+                            <textarea name="comentario_texto" rows="5" cols="40"></textarea>
                         </li>
                     </ul>
-                <input type="hidden" name="actividad_id" value="{{ actividad.id }}"> <!--Aquí pasamos como argumento también la actividad-->
                 <a href = "{{url_for('add_comment')}}">
                     <button id= "boton_comentario_submit">Agregar comentario</button>
                 </a>
-
                 </form>
             </div>
         </div>
-        <div> 
-            <ul id= "lista_de_comentarios_{{actividad.id}}"></ul> <!--Este debe ser gestionado por fetch a través de js-->
-        </div>
-                {% endfor %}
+
         <div class="contenedor_boton">
             <a href="{{url_for('home')}}">
                 <button class="boton_portada" type="button">Quiero volver a la portada</button>
