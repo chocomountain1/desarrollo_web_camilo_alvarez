@@ -74,6 +74,10 @@ public class Actividad {
         return id;
     }
 
+    public String getSector() {
+        return sector;
+    }
+
     public String getName() {
         return nombre;
     }

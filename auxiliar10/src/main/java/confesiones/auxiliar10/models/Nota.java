@@ -13,15 +13,14 @@ public class Nota {
     @Column(nullable = false)
     private Integer nota;
 
-    @ManyToOne(optional = false)
     @JoinColumn(name = "actividad_id", nullable = false)
-    private Actividad actividad;
+    private Long actividadId;
 
     public Nota() {}
 
-    public Nota(Integer nota, Actividad actividad) {
+    public Nota(Integer nota, Long actividadId) {
         this.nota = nota;
-        this.actividad = actividad;
+        this.actividadId = actividadId;
     }
 
     public Long getId() {
@@ -32,8 +31,17 @@ public class Nota {
         return nota;
     }
 
-    public Actividad getActividad() {
-        return actividad;
+    public Long getActividadId() {
+        return actividadId;
+    }
+
+    public Boolean validateNota(Integer nota){
+        if(nota> 7 || nota <1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
 

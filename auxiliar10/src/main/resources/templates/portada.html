@@ -140,26 +140,17 @@
                 <th>Tema</th>
                 <th>Foto</th>
             </tr>
-            {% for actividad,nombre_comuna,archivo,temas in datos %}
-            <tr>
-                <td>{{actividad.dia_hora_inicio}}</td>
-                <td>{{actividad.dia_hora_termino}}</td>
+            <tr th:each="actividad : ${actividades}">
+                <td th:text="${#temporals.format(actividad.diaHoraInicio, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(actividad.diaHoraTermino, 'dd-MM-yyyy HH:mm')}"></td>
                 <td>{{nombre_comuna}}</td>
-                <td>{{actividad.sector}}</td>
-                <td>
-                {% for tema in temas %}
-                    {% if tema.glosa_otro == "no_aplica" %}                    
-                    {{tema.tema.value}}
-                    {% else %}
-                    {{tema.glosa_otro}}
-                    {% endif %}
-                {% endfor %}
-                </td>
+                <td th:text="${actividad.sector}"></td>
+                <td th:each="tema : ${actividad.temas}" th:if="${tema.glosaOtro == 'no_aplica'}" th:text="${#strings.toLowerCase(tema.tema)}"></td>
+                <td th:each="tema : ${actividad.temas}" th:if="${tema.glosaOtro != 'no_aplica'}" th:text="${#strings.toLowerCase(tema.glosaOtro)}"></td>
                 <td>
                     <img src="{{ archivo.ruta_archivo }}" alt="Foto actividad">
                 </td>
             </tr>
-            {% endfor %}
         </table>
     </div>
 </body>
