@@ -1,0 +1,339 @@
+<html>
+<head>
+    <title>Listado de actividades</title>
+    <style>
+        /* Reset básico */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            padding: 30px 20px;
+        }
+
+        h1#h1 {
+            font-weight: 600;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #222;
+            display: flex;
+            justify-content: center;
+        }
+
+        #div {
+            overflow-x: auto;
+        }
+
+        table.tabla_portada {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: default;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: 600;
+            color: #555;
+        }
+
+        tr#tr:hover {
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        /* Imágenes ocultas dentro de la tabla */
+        #foto {
+            display: none;
+            width: 320px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        /* Modal listado */
+        #modal_listado {
+            display: none;
+            position: fixed;
+            top: 5%;
+            left: 25%;
+            width: 50%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        #modal_listado h1 {
+            font-size: 1.9rem;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        #modal_listado p {
+            margin-bottom: 10px;
+            color: #444;
+            font-size: 1rem;
+        }
+
+        #div_imagenes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        #div_imagenes img {
+            width: 320px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        /* Botones dentro de modal y contenedor general */
+        .contenedor_boton {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .boton_portada {
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .boton_portada:hover {
+            background-color: #0056b3;
+        }
+
+        /* Modal listado */
+#modal_listado {
+    display: none;
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    max-height: 85vh;       /* altura máxima relativa a la pantalla */
+    overflow-y: auto;       /* activa scroll vertical si el contenido es más grande */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+    /* Modal foto */
+    #modal_foto {
+        display: none;
+        position: fixed;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        z-index: 1100;
+        max-width: 90vw;
+        max-height: 90vh;       /* altura máxima relativa a la pantalla */
+        overflow-y: auto;       /* scroll vertical si contenido excede altura */
+    }
+
+    #modal_foto #imagenes {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+        max-height: 80vh;  /* para limitar tamaño de imágenes */
+        overflow-y: auto;
+    }
+
+    #modal_foto img#imagen {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        max-height: 80vh;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        #modal_listado {
+            width: 90%;
+            left: 5%;
+            max-height: 80vh;
+        }
+
+        #div_imagenes img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    .formulario_comentario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.formulario_comentario input[type="text"],
+.formulario_comentario textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formulario_comentario ul {
+    list-style: none;
+    padding: 0;
+}
+
+.formulario_comentario li {
+    margin-bottom: 15px;
+}
+    </style>
+</head>
+<body>
+    <h1 id="h1">Listado de actividades</h1>
+
+    <div id="div">
+        <table class="tabla_portada">
+            <thead>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Nombre del organizador</th>
+                    <th>Total de fotos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for actividad, comuna, temas, fotos, contactos in datos %}
+                <tr id="tr" style="cursor: pointer;">
+                    <td>
+                        2025-03-31 <br>
+                        {{actividad.dia_hora_inicio}}
+                    </td>
+                    <td>
+                        2025-03.31 <br>
+                        {{actividad.dia_hora_termino}}
+                    </td>
+                    <td>{{comuna}}</td>
+                    <td>{{actividad.sector}}</td>
+                    <td>
+                        {% for tema in temas %}
+                            {% if tema.glosa_otro == "no_aplica" %}
+                                {{tema.tema.value}}
+                            {% else %}
+                                {{tema.glosa_otro}}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{actividad.nombre}}</td>
+                    <td>{{ fotos | length }}</td>
+                    <td style="display:none;">
+                        {% for foto in fotos %}
+                            <img id="foto" src="{{foto.ruta_archivo}}" alt="Foto actividad">
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="contenedor_boton" style="padding: 5%;">
+            <a href="{{url_for('home')}}">
+                <button class="boton_portada" type="button">Quiero volver a la portada</button>
+            </a>
+        </div>
+    <div id="modal_listado">
+        <h1>Detalles de la actividad</h1>
+        <p id="inicio"></p>
+        <p id="termino"></p>
+        <p id="comuna"></p>
+        <p id="sector"></p>
+        <p id="tema"></p>
+        <p id="nombre"></p>
+        <div id="div_imagenes"></div>
+        <div id="div_comentarios"> 
+            <p>Agregar un comentario</p>
+            <div id="div_form_comentario" style="display: block;" class= "formulario_comentario">
+                <div id="error_comentario" style="color: red; margin-bottom: 10px;"></div>
+                <form method="post" enctype="multipart/form-data" id="form_comentario">
+                    <ul>
+                        <li>
+                            <label>Nombre</label>
+                            <input name="comentario_nombre">
+                        </li>
+                        <li>
+                            <label>Comentario</label>
+                            <textarea name="comentario_texto" rows="5" cols="40"></textarea>
+                        </li>
+                    </ul>
+                <a href = "{{url_for('add_comment')}}">
+                    <button id= "boton_comentario_submit">Agregar comentario</button>
+                </a>
+                </form>
+            </div>
+        </div>
+
+        <div class="contenedor_boton">
+            <a href="{{url_for('home')}}">
+                <button class="boton_portada" type="button">Quiero volver a la portada</button>
+            </a>
+            <a href="{{url_for('activity_list')}}">
+                <button class="boton_portada" type="button">Quiero volver a la lista de actividades</button>
+            </a>
+        </div>
+    </div>
+
+    {% for fotos in lista_fotos %}
+        {% for foto in fotos %}
+        <div id="modal_foto">
+            <div id="imagenes">
+                <img id="imagen" src="{{foto.ruta_archivo}}" alt="Foto detalle" width="800" height="600">
+            </div>
+            <div class="contenedor_boton">
+                <button id="boton_foto" class="boton_portada" type="button">Cerrar</button>
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+
+<script src="{{url_for('static', filename='js/modales.js')}}"></script>
+<script src="{{url_for('static',filename='js/comentarios.js')}}"></script>
+</body>
+</html>

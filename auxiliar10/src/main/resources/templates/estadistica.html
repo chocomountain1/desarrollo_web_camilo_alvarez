@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas</title>
+    <style>
+        .flot-x-axis .flot-tick-label{
+            font-size: 10px;
+        }
+
+        .flot-y-axis .flot-tick-label{
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estadísticas sobre las actividades</h1>
+    <!-- Agregamos los errores desde el backend hasta el html con flash y jinja2-->
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <p style="font-size: large;">{{message}}</p>
+                {% endfor %}
+            {% else %}
+            <h2>Gráfico de cantidad de actividades agregadas por día</h2>
+                <div id="1graph" style="width: 600px;height: 300px;"></div> <!-- first graph-->
+            <h2>Gráfico de actividades agregadas por tipo</h2>
+                <div id="2graph" style="width: 600px;height: 300px;"></div> <!-- second graph-->
+            <h2>Gráfico de actividades agregadas por horario</h2>
+                <div id="3graph" style="width: 600px;height: 300px;"></div> <!-- third graph-->
+            {% endif %}
+    {% endwith %}
+
+    <div style="display: flex; justify-content: center; margin-top: 10%;">
+        <form action="{{url_for('home')}}">
+            <button class="boton_portada" type="submit">Volver a la portada</button>
+        </form>
+    </div>
+</body>
+<!-- jQuery -->
+<script src="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"></script>
+
+<!-- Flot v0.8.3 y sus plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.categories.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.pie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.orderBars.min.js"></script>
+
+<!-- Script -->
+<script src="{{ url_for('static', filename='js/estadistica.js')}}"></script>
+</html>
