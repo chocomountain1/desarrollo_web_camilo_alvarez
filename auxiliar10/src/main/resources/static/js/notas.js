@@ -10,7 +10,7 @@ function ocultarForm(id){
     document.getElementById('celda-form-' + id).style.display = 'none';
 }
 function enviarNota(event) {
-    event.preventDefault(); // Evita el envío clásico
+    event.preventDefault(); 
 
     const form = event.target;
     const actividadId = form.getAttribute("data-actividad-id");
@@ -56,7 +56,7 @@ function calculo_prom_inicial(){
     .then(response => response.json())
     .then(data => {
         console.log("Nuevo promedio", data.promedio);
-        if(data.promedio == 0){
+        if(data.promedio == "0"){
         document.getElementById("prom-" + actividadId).textContent = "-"
         }
         else{
@@ -65,7 +65,7 @@ function calculo_prom_inicial(){
     })
     .catch(error => {
         console.error("Error al guardar la nota:", error);
-        // Mostrar un mensaje de error al usuario
+        
     });
     })
 }

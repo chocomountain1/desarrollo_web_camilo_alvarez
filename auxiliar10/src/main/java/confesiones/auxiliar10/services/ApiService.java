@@ -1,17 +1,9 @@
 package confesiones.auxiliar10.services;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import org.springframework.stereotype.Service;
+import java.text.DecimalFormat;
 
-import confesiones.auxiliar10.models.Actividad;
-import confesiones.auxiliar10.models.ActivityRepository;
 import confesiones.auxiliar10.models.Nota;
 import confesiones.auxiliar10.models.NotaRepository;
 
@@ -22,10 +14,11 @@ public class ApiService {
         this.notaRepository = notaRepository;
     }
 
-    public double calcularPromedioPorId(Long id) {
+    public String calcularPromedioPorId(Long id) {
         System.out.println("hola estoy calculando el prom");
-        int suma = 0;
-        int cantidad = 0;
+        double suma = 0;
+        double cantidad = 0;
+        DecimalFormat df = new DecimalFormat("#.0");
         List<Nota> notas = notaRepository.findAll();
         for(Nota nota: notas){
             if(nota.getActividadId() == id){
@@ -35,10 +28,11 @@ public class ApiService {
         }
         if(cantidad>0){
         double promedio = suma/cantidad;
-        return promedio;
+        String prom_formateado = df.format(promedio);
+        return prom_formateado;
         }
         else{
-        return 0;
+        return "0";
         }
     }
 }
