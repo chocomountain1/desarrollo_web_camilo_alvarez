@@ -1,0 +1,58 @@
+package tarea4.t4.models;
+
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "actividad_tema")
+public class ActividadTema {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Convert(converter = TemaEnumConverter.class)
+    @Column(nullable = false)
+    private TemaEnum tema;
+
+    @Column(name = "glosa_otro", length = 15)
+    private String glosaOtro;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "actividad_id", nullable = false)
+    private Actividad actividad;
+
+
+    public ActividadTema() {}
+
+    public ActividadTema(TemaEnum tema, String glosaOtro, Actividad actividad) {
+        this.tema = tema;
+        this.glosaOtro = glosaOtro;
+        this.actividad = actividad;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public TemaEnum getTema() {
+        return tema;
+    }
+
+    public String getGlosaOtro() {
+        return glosaOtro;
+    }
+
+    public Actividad getActividad() {
+        return actividad;
+    }
+}
