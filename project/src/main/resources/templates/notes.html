@@ -136,7 +136,7 @@
             </tr>
         </thead>
         <tbody>
-           <tr th:each="actividad : ${actividades}" th:id="'fila-' + ${actividad.id}" th:attr="data-tr-id=${actividad.id}">
+           <tr th:each="actividad : ${actividades}" th:if="${actividad.diaHoraTermino < #temporals.createNow()}" th:id="'fila-' + ${actividad.id}" th:attr="data-tr-id=${actividad.id}">
     <td th:text="${actividad.id}"></td>
     <td th:text="${#temporals.format(actividad.diaHoraInicio, 'dd-MM-yyyy HH:mm')}"></td>
     <td th:text="${#temporals.format(actividad.diaHoraTermino, 'dd-MM-yyyy HH:mm')}"></td>
